@@ -1,0 +1,154 @@
+body{
+  overflow: hidden;
+}
+main {
+  display: flex;
+  padding: 0px;
+  overflow: hidden;
+  width: 140vw;
+}
+
+.panelBox {
+  width: calc( 100vw - 580px );
+  background: #03030366;
+  backdrop-filter: blur(7.5px);
+  -webkit-backdrop-filter: blur(7.5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#login_form,
+#register_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 450px;
+  height: 500px;
+}
+
+.panelText {
+  font-size: 50px;
+  letter-spacing: 2px;
+  color: var(--nav-color);
+  width: fit-content;
+  margin: 50px auto;
+}
+
+input, #userfile_label {
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  font-weight: bold;
+  border: 0;
+  outline: 0;
+  border-radius: 5px;
+  margin-top: 30px;
+  padding: 3%;
+}
+
+input[type="submit"] {
+  background-color: var(--btn-color);
+  cursor: pointer;
+  color: var(--nav-color);
+  padding: 0;
+}
+
+input[type="submit"]:hover {
+  background-color: var(--btn-hover-color);
+  letter-spacing: 5px;
+  transition: all 300ms ease-in-out;
+}
+
+#userfile {
+  display: none;
+}
+
+#userfile_label {
+  background-color: #1F4788;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+#userfile_label:hover {
+  background-color: #26A65B;
+  transition: all 300ms ease-in-out;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  right: 0;
+  top: 64px;
+  width: 580px;
+  height: 200vh;
+  z-index: 10;
+  background: linear-gradient(to left, #000046, #003171);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.title, .panel_desc{
+  letter-spacing: 2px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.title{
+  font-size: 60px;
+}
+
+.panel_desc{
+  font-size: 20px;
+  width: 80%;
+  margin: auto;
+}
+
+.goto_button{
+  font-size: 25px;
+  width: fit-content;
+  margin: 100px auto;
+  border: 1px solid white;
+  padding: 10px 40px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.goto_button:hover{
+  background-color: #04377a;
+  transition: all 300ms ease-in-out;
+}
+
+.panels{
+  height: 700px;
+
+}
+
+/* Animations */
+
+.goLeft{
+  transform: translate( calc( -1 * calc( 100vw - 580px ) ) );
+  transition: all 500ms ease-in-out;
+}
+
+.goRight{
+  transform: translate(0vw);
+  transition: all 500ms ease-in-out;
+}
+
+.goUp{
+  transform: translateY(-100vh);
+  transition: all 700ms ease-in-out;
+}
+.goDown{
+  transform: translateY(0vh);
+  transition: all 700ms ease-in-out;
+}
+

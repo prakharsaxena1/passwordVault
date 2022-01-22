@@ -1,0 +1,31 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/contacts.css' %}" />
+{% endblock css %} {% block title %}CONTACT{% endblock title %} {% block main %}
+<h1 id="headTitle">Contact me at the following:</h1>
+<div class="box">
+  <div class="contactCard">
+    <div class="cardImage">
+      <a href="http://github.com/prakharsaxena1" target="_blank">
+        <img src="{% static 'images/github.png' %}" alt="logo_github" />
+      </a>
+    </div>
+    <h2>GitHub</h2>
+  </div>
+  <div class="contactCard">
+    <div class="cardImage">
+      <a href="https://twitter.com/_thunder_cs" target="_blank">
+        <img src="{% static 'images/twitter.png' %}" alt="logo__twitter" />
+      </a>
+    </div>
+    <h2>Twitter</h2>
+  </div>
+  <div class="contactCard">
+    <div class="cardImage">
+      <a href="mailto:prakharsaxena2806@gmail.com" target="_blank">
+        <img src="{% static 'images/email.png' %}" alt="logo_email" />
+      </a>
+    </div>
+    <h2>Email</h2>
+  </div>
+</div>
+{% endblock main %}

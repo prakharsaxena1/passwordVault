@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% load static %} 
+{% block title %}
+  SHARE-PASS
+{% endblock title %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/share-pass.css' %}" />
+{% endblock css %}
+
+{% block main %}
+<script>
+  function share_pass_check() {
+    let value = document.getElementById("textArea").value;
+    //   Decrypt text
+    if (value === "") {
+      console.error("INVALID");
+      alert("You have entered an invaild value");
+    } else {
+      console.log(value);
+      document.getElementById("textArea").value = "";
+    }
+  }
+</script>
+<div class="box">
+  <h2 class="title">Paste your encrypted text here</h2>
+  <textarea placeholder="ENCRYPTED TEXT HERE" id="textArea"></textarea>
+  <div class="btn" onclick="share_pass_check()">Get Password</div>
+</div>
+
+{% endblock main %}

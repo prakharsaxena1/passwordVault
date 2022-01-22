@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}HOME{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock css %}
+
+
+{% block main %}
+  
+        <!-- What is password vault -->
+        <div class="tile">
+          <h2 class="tile-title">What is password vault?</h2>
+          <div class="tile-content-container">
+            <img src="{% static 'images/secure_password_sharing.png' %}" alt="Password share" class="share-password-img">
+            <p class="tile-content">PasswordVault is a sophisticated programme that allows users to safely store and manage all of their login credentials. This tool can help you create secure, one-of-a-kind passwords for web apps. They are then encrypted and stored in the user's personal vault. To access the saved credentials, users just need to carry one file and remember one password. This programme also includes other capabilities such as the ability to check if any of their accounts have been compromised as a result of a data breach and the option to share passwords with their contacts.</p>
+            <img src="{% static 'images/padlock2.png' %}" alt="padlock" class="share-password-img">
+          </div>
+        </div>
+        
+        <!-- Need for good password managers -->
+        <div class="tile">
+          <h2 class="tile-title">Need for good password managers</h2>
+          <div class="tile-content-container">
+            <div class="needs">
+              <p>
+                We need password manager for the following reasons:
+                <ul>
+                  <li>remember a lot of passwords</li>
+                  <li>create strong passwords</li>
+                  <li>store passwords safely</li>
+                  <li>create unique passwords</li>
+                </ul>
+              </p> 
+              
+            </div>
+            <div class="vl"></div>
+            <div class="pv-use">
+              <p>How can PasswordVault help?
+                <ul>
+                  <li>Can remember any number of passwords</li>
+                  <li>Make strong and unique passwords</li>
+                  <li>Uses double-AES encryption for storage</li>
+                  <li>You are your own database</li>
+                  <li>Can share your passwords securely using share-pass</li>
+                </ul>
+                
+              </p>
+              
+              <p>For more checkout <a href="#features">features</a></p>
+            </div>  
+          </div>
+        </div>
+        
+        <!-- Features -->
+        <div class="tile" id="features">
+          <h2 class="tile-title">Features</h2>
+          <div class="tile-content-container">
+            <p class="tile-content">You might access email accounts, social media accounts, e-commerce websites, and other internet sites throughout the course of a day. You may easily end yourself using alot of usernames and passwords every day. Using a password manager such as PasswordVAULT might come in handy for such situations.
+            </p>
+            <img src="{% static 'images/mind_map.png' %}" alt="padlock" class="share-password-im">
+
+          </div>
+        </div>
+        
+        <!-- How this works -->
+        <div class="tile">
+          <h2 class="tile-title">How does password vault works?</h2>
+          <div class="tile-content-container">
+            <p class="tile-content">PasswordVAULT is easy and simple to use:
+
+            </br>
+              <strong>1. Register an account:</strong> At first you have to register an account, then a <em>datafile</em> will be downloaded. That file will be required for every login, so keep that safe.
+            </br>
+            </br>
+              <strong>2. Login to existing account:</strong> After registering an account in the application, login to the app with the username, password and your <em>datafile</em>.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Encryption details -->
+        <div class="tile">
+          <h2 class="tile-title">Encryption details</h2>
+          <div class="tile-content-container">
+            <p class="tile-content">
+              To encrypt sensitive data, the AES algorithm is used in software and hardware all across the world. It's necessary for government computer security, cybersecurity, and data protection.
+            </p>
+          </div>
+        </div>
+{% endblock main %}
+        

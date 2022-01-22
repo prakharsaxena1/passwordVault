@@ -1,0 +1,51 @@
+main{
+  padding: 0;
+}
+.cardImage a > img {
+  width: 180px;
+  height: 180px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.contactCard {
+  margin-top: 40px;
+  padding: 50px;
+}
+
+.box {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: rgba(11, 11, 11, 0.4);
+  backdrop-filter: blur(7.5px);
+  -webkit-backdrop-filter: blur(7.5px);
+  border-radius: 10px;
+  width: 1000px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.cardImage a > img:hover {
+  background-color: #ffffff;
+  box-shadow: 12px 12px 2px 1px #00000075;
+  cursor: pointer;
+  transform: scale(1.2);
+  transition: all 200ms ease-in-out;
+}
+
+.contactCard h2 {
+  font-size: 30px;
+  width: fit-content;
+  margin: auto;
+  margin-top: 50px;
+  color: #ffffff;
+}
+
+#headTitle {
+  font-size: 58px;
+  margin-top: 60px;
+  background-color: #af1313;
+  text-align: center;
+  color: 	#090909;
+}

@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PASSWORD VAULT</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    {% block css %} 
+    
+    {% endblock css %}
+    <link rel="stylesheet" href="{% static 'css/app_base.css' %}" />
+  </head>
+  <body>
+    <!-- vertical navbar -->
+    <nav>
+      <div class="logo" onclick="window.location = '/app';">Password VAULT</div>
+      <div class="nav_menuItemBOX">
+        <a class="nav_menuItem {% if request.path == '/app/passwordLab' %}active{% endif %}" href="passwordLab">
+          <i class="fas fa-flask"></i>password lab</a>
+        <a class="nav_menuItem {% if request.path == '/app/profile' %}active{% endif %}" href="profile">
+          <i class="far fa-user-circle"></i>profile</a>
+        <a class="nav_menuItem {% if request.path == '/app/passwords' %}active{% endif %}" href="passwords"
+          ><i class="fas fa-key"></i>passwords</a>
+        <a class="nav_menuItem {% if request.path == '/app/secure_note' %}active{% endif %}" href="secure_note"
+          ><i class="far fa-sticky-note"></i>secure note</a>
+        <a class="nav_menuItem {% if request.path == '/app/sharepass' %}active{% endif %}" href="sharepass"
+          ><i class="fas fa-share"></i>sharepass</a>
+        <a class="nav_menuItem" href="download_uf"
+          ><i class="fas fa-file-download"></i>download userfile</a>
+        <a class="nav_menuItem" href="logout"
+          ><i class="fas fa-sign-out-alt"></i>logout</a>
+      </div>
+    </nav>
+    <main>
+      {% block main %} 
+      
+      {% endblock main %} 
+    </main>
+    
+    {% block script %} 
+
+    {% endblock script %}
+  </body>
+</html>

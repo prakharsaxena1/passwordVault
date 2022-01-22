@@ -1,0 +1,76 @@
+{% extends 'app_base.html' %} 
+{% load static %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/app_secure_notes.css' %}" />
+{% endblock css %} 
+{% block main %}
+<!-- Add notes -->
+<div class="display">
+
+  <div class="title">
+    <h2 class="title_text">All your secure notes are present here</h2>
+    <!-- Add button -->
+    <div id="createNoteBtn"><i class="fas fa-plus-circle"></i>Add Note</div>
+  </div>
+  <hr />
+
+  <!-- Notes box -->
+  <div id="notesBox">
+    <!-- Note -->
+    <div class="note">
+      <!-- Control buttons -->
+      <div class="btns">
+        <div class="update">Update</div>
+        <div class="delete">Delete</div>
+      </div>
+      <!-- main note -->
+      <div class="noteContent">
+        <h5 class="dateUpdated">09:25AM, 14 June, 2021</h5>
+        <h2 class="noteTitle">Dummy note</h2>
+        <p class="noteDescription">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
+          numquam corporis quasi nulla necessitatibus similique rem distinctio
+          ex laboriosam repudiandae?
+        </p>
+      </div>
+      <div class="btns">
+        <div class="pin">pin note</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Overlay part -->
+<div id="overlay_ID" class="overlay hidden"></div>
+<div id="addNoteBox_ID" class="addNoteBox hidden">
+  <h2 class="title_text">Add a note!</h2>
+  <div class="addNoteFields">
+    <form action="js_requests/add_note" method="post" id="addNoteForm">
+      {% csrf_token %}
+      <div class="formField">
+        <input
+          type="text"
+          placeholder="Add title"
+          autocomplete="off"
+          name="title"
+          id="title_AN"
+        />
+      </div>
+      <div class="formField">
+        <textarea placeholder="Add description" name="description" id="desc_AN" cols="20" rows="15"></textarea>
+      </div>
+
+      <div class="btnsBox">
+        <div class="btn" id="cancelBtn">CANCEL</div>
+        <input type="submit" class="btn" id="addNoteBtn" />
+      </div>
+
+    </form>
+  </div>
+</div>
+
+{% endblock main %} 
+{% block script %}
+<script src="{% static 'js/app_secure_notes.js' %}"></script>
+{% endblock script %}

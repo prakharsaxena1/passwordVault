@@ -1,0 +1,79 @@
+{% extends 'app_base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/app_profile.css' %}">
+{% endblock css %}
+
+{% block main %}
+    <!-- Top part -->
+    <div class="personalInfoBlock">
+        <h1 class="pib-Title">Hello, <span>{{ userinfo.0 }}</span></h1>
+        <h1 class="pib-Title">Your email: <span id="yourEmail">{{ userinfo.2 }}</span></h1>
+        <div class="userimg">
+            <img src="{% static 'userfile/Sample_User_Icon.png' %}" alt="User image">
+        </div>
+    </div>
+    <!-- Bottom part -->
+    <div class="mainBox">
+        <!-- Part1 -->
+        <div class="contactContainer">
+            <!-- Heading -->
+            <h2 class="heading">Your contacts</h2>
+            <!-- Contacts -->
+            <div id="contactsBox">
+                <!-- Dynamically added contacts -->
+                {% for contact in contacts %}
+                <div class="contact">
+                    <h2 class="contactName">{{ contact.0 }}</h2>
+                    <h2 class="contactEmail">{{ contact.1 }}</h2>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+        <!-- Part2 -->
+        <div class="actionContainer">
+            <!-- Add contacts -->
+            <div class="addContactBox">
+                <!-- heading -->
+                <h2 class="heading">Add a contact to your contact list</h2>
+                <!-- Add contact -->
+                <form method="POST" id="addContactForm">
+                    {% csrf_token %}
+                    <div class="formBox">
+                        <label for="name_AC">Name:</label>
+                        <input type="text" name="name_AC" id="name_AC" autocomplete="off">
+                    </div>
+                    <div class="formBox">
+                        <label for="email_AC">Email:</label>
+                        <input type="email" name="email_AC" id="email_AC" autocomplete="off">
+                    </div>
+                    <div class="formBox">
+                        <input type="submit" class="btn" value="Add">
+                    </div>
+                </form>
+            </div>
+            <!-- Change primary email -->
+            <div class="changeEmailBox">
+                <!-- heading -->
+                <h2 class="heading">Change your primary email</h2>
+                <!-- Add contact -->
+                <form method="POST" id="changeEmailForm">
+                    {% csrf_token %}
+                    <div class="formBox">
+                        <label for="email_CE">Updated Email:</label>    
+                        <input type="email" name="email_CE" id="email_CE" autocomplete="off">
+                    </div>
+                    <div class="formBox">
+                        <input type="submit" class="btn" value="Update">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock main %}
+
+{% block script %}
+<script src="{% static 'js/app_profile.js' %}"></script>
+{% endblock script %}

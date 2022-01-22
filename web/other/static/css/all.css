@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@300;800&display=swap");
+
+/* COLORS */
+:root {
+  --nav-color: #eeeeee;
+  --tile-title-color: #181818;
+  --hover-color: #5d3f6a;
+  --tile-color: #ffffff40;
+  --btn-color: #7f4caf;
+  --btn-hover-color: #68418d;
+}
+
+/* Scrollbar code */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e9e9e6;
+  border-radius: 5px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e9e9e6a9;
+}
+
+/* CSS RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gemunu Libre", monospace;
+}
+
+/* CSS MAIN */
+html {
+  scroll-behavior: smooth;
+}
+
+/* NAVBAR CSS */
+nav {
+  width: 100%;
+  background-color: #252525;
+  color: var(--nav-color);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.container {
+  width: 90%;
+  display: flex;
+  margin-left: auto;
+  justify-content: space-between;
+}
+.menu {
+  width: 750px;
+  display: flex;
+}
+.menu-item {
+  color: var(--nav-color);
+  text-decoration: none;
+  padding: 19px;
+  flex-grow: 2;
+  text-align: center;
+}
+.menu-item:hover {
+  background-color: var(--hover-color);
+  transition: 300ms all ease-in-out;
+}
+
+.active{
+  background-color: var(--hover-color);
+}
+
+.hidden{
+  display: none;
+  visibility: hidden;
+}
+
+main {
+  width: 100%;
+  height: calc( 100vh - 64px );
+  overflow-y: auto;
+  padding: 10px;
+  background-image: linear-gradient(to top right, #0000007e, #8a8a8a70),
+    url(https://source.unsplash.com/1920x1080/?abstract);
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

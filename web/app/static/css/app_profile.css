@@ -1,0 +1,152 @@
+main {
+  flex-direction: column;
+}
+
+/* pib */
+.userimg img {
+  width: 100px;
+  height: 100px;
+  filter: invert(100%);
+}
+.userimg {
+  padding: 5px;
+  background-color: #7e7e7e;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+.personalInfoBlock {
+  padding: 20px;
+  height: 150px;
+  width: 100%;
+  background: #0909094d;
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  position: relative;
+}
+.pib-Title {
+  padding: 5px;
+  color: #ffffff;
+  margin-left: 120px;
+}
+
+/* mainBox */
+.mainBox {
+  width: 100%;
+  height: calc(100vh - 150px);
+  padding: 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Part1 and Part2: Common */
+.contactContainer,
+.actionContainer {
+  width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.heading {
+  color: #ffffff;
+  font-size: 35px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Part1 */
+.contactContainer {
+  padding: 20px;
+  
+  background: #0909094d;
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+}
+
+#contactsBox {
+  padding: 20px;
+  height: calc(100% - 70px);
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.contact {
+  padding: 10px;
+  margin: 10px;
+  background-color: #f8f6f6c2;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Part2 */
+.addContactBox,
+.changeEmailBox {
+  width: 100%;
+  padding: 20px;
+  height: fit-content;
+  background: #0000004d;
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#addContactForm,
+#changeEmailForm {
+  margin-top: 40px;
+  padding: 20px;
+  width: 100%;
+  height: 220px;
+  background: #0909094d;
+  backdrop-filter: blur(5.5px);
+  -webkit-backdrop-filter: blur(5.5px);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.formBox {
+  width: 85%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  align-items: center;
+}
+.formBox input {
+  outline: 0;
+  border: 0;
+  height: 40px;
+  padding: 5px;
+  letter-spacing: 1px;
+  width: 300px;
+  font-size: 20px;
+  border-radius: 5px;
+}
+.formBox label {
+  font-size: 25px;
+  width: 180px;
+  padding: 10px;
+  font-weight: 800;
+  color: #ffffff;
+}
+.formBox button {
+  border-radius: 5px;
+  padding: 5px 25px;
+  font-size: 25px;
+  font-size: 800;
+  margin: auto;
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+}
+
+input[type="submit"]{
+  margin: auto;
+}

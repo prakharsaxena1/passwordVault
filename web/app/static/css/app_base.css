@@ -1,0 +1,109 @@
+/* SAME CODE TILL HITPOINT IN "app_base.css" */
+
+@import url("https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@300;800&display=swap");
+
+/* Scrollbar code */
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #e9e9e6;
+  border-radius: 5px;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #e9e9e6a9;
+}
+
+/* CSS RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gemunu Libre", monospace;
+}
+
+/* CSS MAIN */
+html {
+  scroll-behavior: smooth;
+}
+
+/* HITPOINT */
+body {
+  display: flex;
+  overflow: hidden;
+}
+
+nav {
+  width: 260px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: black;
+  color: #e9e9e6;
+}
+
+.logo {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.nav_menuItem {
+  text-decoration: none;
+  color: #e9e9e6;
+  width: 100%;
+  display: block;
+  padding: 20px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 800;
+}
+.nav_menuItem:hover {
+  background-color: #9b59b6;
+  letter-spacing: 1px;
+  transition: all 300ms ease-in-out;
+}
+
+.nav_menuItem i {
+  padding-right: 16px;
+}
+
+main {
+  width: calc(100vw - 260px);
+  height: 100vh;
+  background-image: linear-gradient(to top right, #0000007e, #8a8a8a70),
+  url(https://source.unsplash.com/1280x720/?abstract);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  position: relative;
+  /* Flex */
+  display: flex;
+}
+
+/* Active */
+.active {
+  background-color: #8e44ad;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: -260px;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0000009a;
+}
+
+/* hidden */
+.hidden{
+  display: none;
+}

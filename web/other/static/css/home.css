@@ -1,0 +1,70 @@
+/* main CSS */
+
+.tile {
+  width: 100%;
+  height: 600px;
+  background-color: var(--tile-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(6px);
+}
+
+.tile-title {
+  text-align: center;
+  padding: 35px;
+  color: var(--tile-title-color);
+  font-size: 2.4rem;
+  letter-spacing: 3px;
+}
+
+.tile-content-container {
+  display: flex;
+  min-height: 450px;
+  justify-content: space-evenly;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.tile-content {
+  width: 600px;
+  text-align: center;
+  height: 100%;
+  font-size: 1.5rem;
+  padding: 10px;
+  line-height: 45px;
+}
+
+.share-password-img {
+  width: 350px;
+  height: 350px;
+}
+
+.needs,
+.pv-use {
+  height: 98%;
+  padding: 50px;
+  line-height: 50px;
+  text-align: justify;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.vl {
+  border-left: 4px solid var(--tile-title-color);
+  height: 80%;
+  margin-top: auto;
+  margin-bottom: auto;
+  border-radius: 5px;
+}
+
+.points {
+  width: 400px;
+  height: 100%;
+}
+
+/* Bottom CSS */
+.hidden {
+  display: none;
+}

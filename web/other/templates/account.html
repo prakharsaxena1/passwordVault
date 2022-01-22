@@ -1,0 +1,84 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}" />
+{% endblock css %} 
+{% block title %}Account page{% endblock title %} 
+{% block main %}
+<!-- ENCRYPT -->
+<div class="panelBox" id="login_box">
+  <h2 class="panelText">Login to your account</h2>
+  <form action="/app/handle/login" method="post" id="login_form" enctype="multipart/form-data">
+    {%csrf_token%}
+    <!-- username -->
+    <input
+      type="text"
+      name="username"
+      id="username_login"
+      autocomplete="off"
+      placeholder="Username"
+    />
+    <!-- password -->
+    <input
+      type="password"
+      name="password"
+      id="password_login"
+      placeholder="Password"
+    />
+    <!-- file -->
+    <input type="file" name="userfile" id="userfile"/>
+    <label for="userfile" id="userfile_label">Upload your userfile</label>
+    <input type="submit" value="Login" />
+  </form>
+</div>
+
+<div class="panelBox" id="register_box">
+  <h2 class="panelText">Register an account</h2>
+  <form action="/app/handle/register" method="post" id="register_form">
+    {%csrf_token%}
+    <!-- username -->
+    <input
+      type="text"
+      name="username"
+      id="username_register"
+      autocomplete="off"
+      placeholder="Username"
+    />
+    <!-- password -->
+    <input
+      type="password"
+      name="password"
+      id="password_register"
+      placeholder="Password"
+    />
+    <!-- email -->
+    <input type="email" name="email" id="email" placeholder="Email" />
+    <input type="submit" value="Register" />
+  </form>
+</div>
+
+<div class="overlay">
+  <!-- Register -->
+  <div class="panels" id="panel1">
+    <h2 class="title">New here?</h2>
+    <p class="panel_desc">
+      PasswordVAULT provides you with the best possible security to store your
+      passwords.
+      Register an account now!!
+    </p>
+    <div class="goto_button" id="goto_register_button">Register</div>
+  </div>
+
+  <!-- Login -->
+  <div class="panels" id="panel2">
+    <h2 class="title">Have an existing account?</h2>
+    <p class="panel_desc">
+      Login to your account to use all the features of PasswordVAULT
+    </p>
+    <div class="goto_button" id="goto_login_button">Login</div>
+  </div>
+</div>
+{% endblock main %}
+{% block script %} 
+<script src="{% static 'js/account.js' %}"></script>
+{% endblock script %}
