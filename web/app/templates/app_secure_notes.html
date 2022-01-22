@@ -16,8 +16,9 @@
 
   <!-- Notes box -->
   <div id="notesBox">
+    {% for note in notes %}
     <!-- Note -->
-    <div class="note">
+    <div class="note" id="{{ note.4 }}">
       <!-- Control buttons -->
       <div class="btns">
         <div class="update">Update</div>
@@ -25,18 +26,15 @@
       </div>
       <!-- main note -->
       <div class="noteContent">
-        <h5 class="dateUpdated">09:25AM, 14 June, 2021</h5>
-        <h2 class="noteTitle">Dummy note</h2>
-        <p class="noteDescription">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-          numquam corporis quasi nulla necessitatibus similique rem distinctio
-          ex laboriosam repudiandae?
-        </p>
+        <h5 class="dateUpdated">{{ note.2 }}</h5>
+        <h2 class="noteTitle">{{ note.0 }}</h2>
+        <p class="noteDescription">{{ note.1 }}</p>
       </div>
       <div class="btns">
         <div class="pin">pin note</div>
       </div>
     </div>
+    {% endfor %}
   </div>
 
 </div>

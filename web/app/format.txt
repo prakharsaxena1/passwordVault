@@ -1,0 +1,16 @@
+userinfo:
+[0::username, 1::password, 2::email]
+
+password:
+[0::site, 1::url, 2::password, 3::category, 4::dateUpdated, 5::uid]
+
+note:
+[0::title, 1::description, 2::dateUpdated, 3::isPinned("PI" or "NP"), 4::uid]
+
+contact:
+[0::cname, 1::cemail, 2::uid]
+
+separater = ":&ō&:"
+
+desired date format:
+day, date month year time(HH:MM)

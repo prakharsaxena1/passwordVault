@@ -1,13 +1,67 @@
-{% extends 'app_base.html' %}
-{% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'css/app_sharepass.css' %}">
-{% endblock css %}
-
-{% block main %}
-    
-{% endblock main %}
-
-{% block script %}
+{% extends 'app_base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/app_sharepass.css' %}" />
+{% endblock css %} {% block main %}
+<div class="sharepassBox">
+  <!-- Above part -->
+  <div class="title">
+    <h2 class="title_text">Share your passwords among your contacts</h2>
+    <h3>
+      In order to share your passwords, you must have contacts in your profile
+    </h3>
+  </div>
+  <!-- Below part -->
+  <form action="js_requests/sharePass" method="post" id="sharepassForm">
+    {% csrf_token %}
+    <div class="formBox">
+      <label for="textFilled">Text</label>
+      <input
+        type="text"
+        name="textFilled"
+        id="textFilled"
+        autocomplete="off"
+        placeholder="Enter text to share"
+      />
+    </div>
+    <div class="formBox">
+      <label for="keyFilled">Key</label>
+      <input
+        type="text"
+        name="keyFilled"
+        id="keyFilled"
+        autocomplete="off"
+        placeholder="Enter your shared key"
+      />
+    </div>
+    <div class="formBox">
+      <select id="encryption_category" name="encryption_category">
+        <option value="UE">User encryption</option>
+        <option value="SE">Server encryption</option>
+      </select>
+    </div>
+    <div class="formBox">
+      <select id="contactSelect" name="contactSelect">
+        <option value="0">Select a contact</option>
+        {% for contact in contacts %}
+        <option value="{{ contact.2 }}">{{ contact.0 }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="formBox">
+      <textarea
+        name="enc_out"
+        id="enc_out"
+        cols="30"
+        rows="10"
+        placeholder="Encrypted text"
+        disabled
+      ></textarea>
+    </div>
+    <div class="btns">
+      <div class="clear" id="clearBtn">Clear</div>
+      <input type="submit" value="Share" id="shareBtn" />
+    </div>
+  </form>
+</div>
+{% endblock main %} {% block script %}
 <script src="{% static 'js/app_sharepass.js' %}"></script>
 {% endblock script %}

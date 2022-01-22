@@ -7,7 +7,7 @@ from . import helpers
 
 
 # Create your views here.
-global context 
+global context
 context = {
     "userinfo":[],
     "passwords":[],
@@ -60,15 +60,30 @@ def app_account_handler(request, x):
     # If login failed or GET request
     return redirect("/account/")
 
-# Home page
+# Home page (app/)
 def app_home(request):
     return render(request, "app_home.html")
+
+def downloadUserfile():
+    localContext = getContext()
+    fObj = helpers.getFernetObj(localContext["userinfo"][0], localContext["userinfo"][1])
+    dataList = [fObj.encrypt(":&ō&:".join(localContext["userinfo"]).encode()).decode()]
+    if localContext["passwords"] != []:
+        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["passwords"]]
+    if localContext["notes"] != []:
+        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["notes"]]
+    if localContext["contacts"] != []:
+        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["contacts"]]
+    file_data = "\n".join(dataList)
+    response = HttpResponse(file_data, content_type='application/text charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="{localContext["userinfo"][0]}"'
+    return response
 
 # Routes handler
 def routingFunction(request, service):
     services = ["profile","passwordLab", "passwords", "secure_note", "sharepass", "download_uf", "logout" ]
-
     if checkContext() == True and service in services:
+        downloaded = False
         if service == "profile":
             context = getContext()
             return render(request, "app_profile.html", {"contacts": context["contacts"], "userinfo": context["userinfo"]})
@@ -89,19 +104,23 @@ def routingFunction(request, service):
             return render(request, "app_sharepass.html", {"contacts": context["contacts"]})
 
         elif service == "download_uf":
-            print("convert context to userfile")
-            return HttpResponse("app_download_uf")
+            return downloadUserfile()
 
         elif service == "logout":
-            setContext({"userinfo":[],"passwords":[],"notes": [],"contacts": []})
-            return redirect("/account/")
+            if downloaded == True:
+                setContext({"userinfo":[],"passwords":[],"notes": [],"contacts": []})
+                return redirect("/account/")
+            print("download your userfile first")
+            downloaded = True
+            return downloadUserfile()
 
     elif checkContext() == False and service in services:
         return redirect("/account/")
 
-    return render(request, "404.html")
+    elif checkContext() == True and service not in services:
+        return render(request, "404.html")
 
-
+    return redirect("/account/")
 
 @csrf_protect
 def js_requests(request,service):
@@ -110,34 +129,50 @@ def js_requests(request,service):
             return HttpResponse(helpers.genPassword(request.body.decode()))
         
         elif service == "add_password":
+            try:
+                passwordInfo = helpers.makePassDataList(request.body.decode())
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Error adding password"}))
             localContext = getContext()
-            localContext["passwords"].append(helpers.makePassDataList(request.body.decode()))
+            localContext["passwords"].append(passwordInfo)
             setContext(context_new=localContext)
-            return HttpResponse(helpers.httpDump({"msg": "password_added"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "password_added"}))
         
         elif service == "add_note":
-            # localContext = getContext()
-            # localContext["notes"].append(helpers.makePassDataList(request.body.decode()))
-            # setContext(context_new=localContext)
-            print(request.body.decode())
-            return HttpResponse(helpers.httpDump({"msg": "note_added"}))
+            try:
+                noteList = helpers.makeNoteDataList(request.body.decode())
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Note is empty"}))
+            localContext = getContext()
+            localContext["notes"].append(noteList)
+            setContext(context_new=localContext)
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "note_added"}))
         
         elif service == "addContact":
+            try:
+                contact = helpers.makeContactDataList(request.body.decode())
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Invalid data"}))
             localContext = getContext()
-            localContext["contacts"].append(helpers.makeContactDataList(request.body))
+            localContext["contacts"].append(contact)
             setContext(context_new=localContext)
-            # On success
-            return HttpResponse(helpers.httpDump({"success": "true"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully added"}))
         
         elif service == "changeEmail":
             try:
                 updatedEmail = helpers.emailUpdate(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": e}))
+                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Invalid email"}))
             localContext = getContext()
             localContext["userinfo"][2] = updatedEmail 
             setContext(context_new=localContext)
-            # On success
-            return HttpResponse(helpers.httpDump({"success": "true"}))
-            
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "Email updated"}))
+        
+        elif service == "sharePass":
+            try:
+                x = helpers.sharePass_enc(request.body.decode())
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Encryption error"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": x}))
+
     return render(request, "404.html")
