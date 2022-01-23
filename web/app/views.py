@@ -83,7 +83,6 @@ def downloadUserfile():
 def routingFunction(request, service):
     services = ["profile","passwordLab", "passwords", "secure_note", "sharepass", "download_uf", "logout" ]
     if checkContext() == True and service in services:
-        downloaded = False
         if service == "profile":
             context = getContext()
             return render(request, "app_profile.html", {"contacts": context["contacts"], "userinfo": context["userinfo"]})
@@ -107,12 +106,8 @@ def routingFunction(request, service):
             return downloadUserfile()
 
         elif service == "logout":
-            if downloaded == True:
-                setContext({"userinfo":[],"passwords":[],"notes": [],"contacts": []})
-                return redirect("/account/")
-            print("download your userfile first")
-            downloaded = True
-            return downloadUserfile()
+            setContext({"userinfo":[],"passwords":[],"notes": [],"contacts": []})
+            return redirect("/account/")
 
     elif checkContext() == False and service in services:
         return redirect("/account/")

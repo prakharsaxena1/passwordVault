@@ -23,30 +23,38 @@
     <nav>
       <div class="logo" onclick="window.location = '/app';">Password VAULT</div>
       <div class="nav_menuItemBOX">
-        <a class="nav_menuItem {% if request.path == '/app/passwordLab' %}active{% endif %}" href="passwordLab">
-          <i class="fas fa-flask"></i>password lab</a>
-        <a class="nav_menuItem {% if request.path == '/app/profile' %}active{% endif %}" href="profile">
-          <i class="far fa-user-circle"></i>profile</a>
-        <a class="nav_menuItem {% if request.path == '/app/passwords' %}active{% endif %}" href="passwords"
-          ><i class="fas fa-key"></i>passwords</a>
-        <a class="nav_menuItem {% if request.path == '/app/secure_note' %}active{% endif %}" href="secure_note"
-          ><i class="far fa-sticky-note"></i>secure note</a>
-        <a class="nav_menuItem {% if request.path == '/app/sharepass' %}active{% endif %}" href="sharepass"
-          ><i class="fas fa-share"></i>sharepass</a>
-        <a class="nav_menuItem" href="download_uf"
-          ><i class="fas fa-file-download"></i>download userfile</a>
-        <a class="nav_menuItem" href="logout"
-          ><i class="fas fa-sign-out-alt"></i>logout</a>
+        <a class="nav_menuItem {% if request.path == '/app/passwordLab' %}active{% endif %}" href="passwordLab"><i class="fas fa-flask"></i>password lab</a>
+        <a class="nav_menuItem {% if request.path == '/app/profile' %}active{% endif %}" href="profile"><i class="far fa-user-circle"></i>profile</a>
+        <a class="nav_menuItem {% if request.path == '/app/passwords' %}active{% endif %}" href="passwords"><i class="fas fa-key"></i>passwords</a>
+        <a class="nav_menuItem {% if request.path == '/app/secure_note' %}active{% endif %}" href="secure_note"><i class="far fa-sticky-note"></i>secure note</a>
+        <a class="nav_menuItem {% if request.path == '/app/sharepass' %}active{% endif %}" href="sharepass"><i class="fas fa-share"></i>sharepass</a>
+        <a class="nav_menuItem" href="download_uf"><i class="fas fa-file-download"></i>download userfile</a>
+        <a class="nav_menuItem" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>logout</a>
       </div>
     </nav>
     <main>
-      {% block main %} 
+      {% block main %}
       
-      {% endblock main %} 
+      {% endblock main %}
+
+      <!-- Logout part -->
+      <div class="overlay_logout hidden" id="overlay_logout">
+        <div class="questionBox">
+          <div>
+            <h2>Have you downloaded your userfile?</h2>
+            <p>If you wish to save the modifications made during this session, download your userfile.</p>
+          </div>
+          <div class="logout_btns">
+            <div class="logoutBtn" id="yesBtn">Yes</div>
+            <div class="logoutBtn" id="noBtn">No</div>
+          </div>
+        </div>
+      </div>
+
     </main>
-    
     {% block script %} 
 
     {% endblock script %}
+    <script src="{% static 'js/app_base.js' %}"></script>
   </body>
 </html>

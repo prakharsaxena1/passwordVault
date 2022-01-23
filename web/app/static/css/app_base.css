@@ -76,7 +76,7 @@ main {
   width: calc(100vw - 260px);
   height: 100vh;
   background-image: linear-gradient(to top right, #0000007e, #8a8a8a70),
-  url(https://source.unsplash.com/1280x720/?abstract);
+    url(https://source.unsplash.com/1280x720/?abstract);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -94,7 +94,8 @@ main {
 }
 
 /* Overlay */
-.overlay {
+.overlay,
+.overlay_logout {
   position: absolute;
   top: 0;
   left: -260px;
@@ -103,7 +104,69 @@ main {
   background-color: #0000009a;
 }
 
+.questionBox {
+  top: 37%;
+  margin: auto;
+  left: 37.5%;
+  width: 480px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f0f8ff;
+  border-radius: 10px;
+  height: 200px;
+  position: absolute;
+}
+
+.questionBox > div > h2 {
+  text-align: center;
+  padding-bottom: 5px;
+  font-size: 30px;
+}
+
+.questionBox > div > p {
+  padding-bottom: 5px;
+  width: 400px;
+  margin: auto;
+  text-align: center;
+  font-weight: 800;
+}
+
+.logout_btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.logoutBtn {
+  width: 140px;
+  padding: 15px;
+  text-align: center;
+  border-radius: 10px;
+  height: 50px;
+  font-weight: 800;
+  cursor: pointer;
+  /* color: #ffffff; */
+  transition: background-color 220ms ease-in-out;
+}
+
+#yesBtn{
+  background-color: #17cf4e;
+}
+
+#noBtn{
+  background-color: #ee281a;
+}
+
+#yesBtn:hover{
+  background-color: #00ff4c;
+}
+
+#noBtn:hover{
+  background-color: #bb1a0e;
+}
+
 /* hidden */
-.hidden{
+.hidden {
   display: none;
 }
