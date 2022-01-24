@@ -37,6 +37,12 @@ def app_account_handler(request, x):
         username = request.POST["username"]
         password = request.POST["password"]
         userfile = request.FILES['userfile'].readlines()
+        print()
+        print(username)
+        print()
+        print(password)
+        print()
+        print(userfile)
         if helpers.login_pass(username, password, userfile[0]):
             fObj = helpers.getFernetObj(username,password)
             for i in userfile:
@@ -49,7 +55,6 @@ def app_account_handler(request, x):
                     context["notes"].append(temp[1::])
                 elif temp[0] == "contact":
                     context["contacts"].append(temp[1::])
-            # print(context)
             return redirect("/app/passwords")
     elif request.method == "POST" and x == 'register':
         username = request.POST["username"]
@@ -66,14 +71,15 @@ def app_home(request):
 
 def downloadUserfile():
     localContext = getContext()
+    print(localContext)
     fObj = helpers.getFernetObj(localContext["userinfo"][0], localContext["userinfo"][1])
-    dataList = [fObj.encrypt(":&ō&:".join(localContext["userinfo"]).encode()).decode()]
+    dataList = [fObj.encrypt(("userinfo:&ō&:" + ":&ō&:".join(localContext["userinfo"])).encode()).decode()]
     if localContext["passwords"] != []:
-        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["passwords"]]
+        dataList += [fObj.encrypt(("password:&ō&:" + ":&ō&:".join(i)).encode()).decode() for i in localContext["passwords"]]
     if localContext["notes"] != []:
-        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["notes"]]
+        dataList += [fObj.encrypt(("note:&ō&:" + ":&ō&:".join(i)).encode()).decode() for i in localContext["notes"]]
     if localContext["contacts"] != []:
-        dataList += [fObj.encrypt(":&ō&:".join(i).encode()).decode() for i in localContext["contacts"]]
+        dataList += [fObj.encrypt(("contact:&ō&:" + ":&ō&:".join(i)).encode()).decode() for i in localContext["contacts"]]
     file_data = "\n".join(dataList)
     response = HttpResponse(file_data, content_type='application/text charset=utf-8')
     response['Content-Disposition'] = f'attachment; filename="{localContext["userinfo"][0]}"'
@@ -127,7 +133,9 @@ def js_requests(request,service):
             try:
                 passwordInfo = helpers.makePassDataList(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Error adding password"}))
+                return HttpResponse(helpers.httpDump({"success": "false", 
+                                                      "msgT": "Error adding password",
+                                                      "msgD": "Some of the fields are missing, please fill all the required fields."}))
             localContext = getContext()
             localContext["passwords"].append(passwordInfo)
             setContext(context_new=localContext)
@@ -137,7 +145,8 @@ def js_requests(request,service):
             try:
                 noteList = helpers.makeNoteDataList(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Note is empty"}))
+                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Note is empty",
+                                                      "msgD":"The title and description for the note is missing, please fill all the required fields."}))
             localContext = getContext()
             localContext["notes"].append(noteList)
             setContext(context_new=localContext)
@@ -147,7 +156,8 @@ def js_requests(request,service):
             try:
                 contact = helpers.makeContactDataList(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Invalid data"}))
+                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Invalid data",
+                                                      "msgD": "The date entered is not valid, please check before submitting again."}))
             localContext = getContext()
             localContext["contacts"].append(contact)
             setContext(context_new=localContext)
@@ -157,7 +167,8 @@ def js_requests(request,service):
             try:
                 updatedEmail = helpers.emailUpdate(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Invalid email"}))
+                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Invalid email",
+                                                      "msgD": "The provided email is not valid, please check the email before submitting again."}))
             localContext = getContext()
             localContext["userinfo"][2] = updatedEmail 
             setContext(context_new=localContext)
@@ -167,7 +178,8 @@ def js_requests(request,service):
             try:
                 x = helpers.sharePass_enc(request.body.decode())
             except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msg": "Encryption error"}))
+                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Encryption error", "msgD": "Data provided is incomplete, check method used."}))
             return HttpResponse(helpers.httpDump({"success": "true", "msg": x}))
 
     return render(request, "404.html")
+

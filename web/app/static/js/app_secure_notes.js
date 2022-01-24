@@ -1,9 +1,3 @@
-// var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-// var today = new Date();
-
-// console.log(today.toLocaleDateString("en-US")); // 9/17/2016
-// console.log(today.toLocaleDateString("en-US", options)); // Saturday, September 17, 2016
-
 // Functions
 function remOverlay() {
   overlay_ID.classList.add("hidden");
@@ -72,25 +66,23 @@ addNoteForm.addEventListener("submit", function (e) {
     return response.json();
   }).then(function (data) {
     console.log(data);
+    if (data["success"] == "false") {
+      handleError(data);
+    } else {
+      // Add element
+      let note = `<div class="note">
+          <!-- main note -->
+          <div class="noteContent">
+            <h5 class="dateUpdated">${lastUpdated}</h5>
+            <h2 class="noteTitle">${title_AN.value}</h2>
+            <p class="noteDescription">${desc_AN.value}</p>
+          </div>          
+          <!-- Update button -->
+          <div class="update">Update</div>
+        </div>`;
+      notesBox.innerHTML += note;
+    }
   });
-  // Add element
-  let note = `<div class="note">
-      <!-- Control buttons -->
-      <div class="btns">
-        <div class="update">Update</div>
-        <div class="delete">Delete</div>
-      </div>
-      <!-- main note -->
-      <div class="noteContent">
-        <h5 class="dateUpdated">${lastUpdated}</h5>
-        <h2 class="noteTitle">${title_AN.value}</h2>
-        <p class="noteDescription">${desc_AN.value}</p>
-      </div>
-      <div class="btns">
-        <div class="pin">pin note</div>
-      </div>
-    </div>`;
-  notesBox.innerHTML += note;
   // Remove Overlay
   remOverlay();
 });

@@ -95,7 +95,8 @@ main {
 
 /* Overlay */
 .overlay,
-.overlay_logout {
+.overlay_logout,
+#errorOverlay {
   position: absolute;
   top: 0;
   left: -260px;
@@ -104,7 +105,7 @@ main {
   background-color: #0000009a;
 }
 
-.questionBox {
+.questionBox, .errorBox {
   top: 37%;
   margin: auto;
   left: 37.5%;
@@ -119,7 +120,7 @@ main {
   position: absolute;
 }
 
-.questionBox > div > h2 {
+.questionBox > div > h2, .errMsg {
   text-align: center;
   padding-bottom: 5px;
   font-size: 30px;
@@ -138,7 +139,7 @@ main {
   justify-content: space-around;
 }
 
-.logoutBtn {
+.logoutBtn, #okBtn {
   width: 140px;
   padding: 15px;
   text-align: center;
@@ -146,11 +147,22 @@ main {
   height: 50px;
   font-weight: 800;
   cursor: pointer;
-  /* color: #ffffff; */
   transition: background-color 220ms ease-in-out;
 }
 
-#yesBtn{
+/* Error Box */
+.errorBox{
+  background-color: #ee281a;
+}
+#okBtn{
+  margin: auto;
+}
+.errMsgDesc{
+  padding: 10px;
+  font-weight: 600;
+}
+
+#yesBtn, #okBtn{
   background-color: #17cf4e;
 }
 
@@ -158,7 +170,7 @@ main {
   background-color: #ee281a;
 }
 
-#yesBtn:hover{
+#yesBtn:hover, #okBtn:hover{
   background-color: #00ff4c;
 }
 

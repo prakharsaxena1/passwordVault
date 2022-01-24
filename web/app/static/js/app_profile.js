@@ -15,11 +15,12 @@ let email_CE = document.getElementById("email_CE");
 
 // Event Listeners
 addContactForm.addEventListener("submit", function (e) {
+    let name = name_AC.value.charAt(0).toUpperCase() + name_AC.value.slice(1);
     // Prevent reloading
     e.preventDefault();
     // Make a post request
     let passData = {
-        'cname': name_AC.value,
+        'cname': name,
         'cemail': email_AC.value
     }
 
@@ -35,16 +36,19 @@ addContactForm.addEventListener("submit", function (e) {
         return response.json();
     }).then(function (data) {
         console.log(data);
+        if (data["success"] == "false") {
+            handleError(data);
+        } else {
+            // Add element
+            let contact = `<div class="contact">
+            <h2 class="contactName">${name}</h2>
+            <h2 class="contactEmail">${email_AC.value}</h2>
+            </div>`;
+            contactsBox.innerHTML += contact;
+            name_AC.value = "";
+            email_AC.value = "";
+        }
     });
-    console.log(typeof passData);
-    // Add element
-    let contact = `<div class="contact">
-                    <h2 class="contactName">${name_AC.value}</h2>
-                    <h2 class="contactEmail">${email_AC.value}</h2>
-                </div>`;
-    contactsBox.innerHTML += contact;
-    name_AC.value = "";
-    email_AC.value = "";
 });
 
 changeEmailForm.addEventListener("submit", function (e) {
@@ -66,9 +70,13 @@ changeEmailForm.addEventListener("submit", function (e) {
         return response.json();
     }).then(function (data) {
         console.log(data);
+        if (data["success"] == "false") {
+            handleError(data);
+        } else {
+            // Add element
+            yourEmail.innerHTML = email_CE.value;
+            email_CE.value = "";
+        }
     });
-    // Add element
-    yourEmail.innerHTML = email_CE.value;
-    email_CE.value = "";
-
+    
 });

@@ -14,6 +14,14 @@ function addOverlay() {
     category.value = "other";
 }
 
+function myFunction() {
+    if (password.type === "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
+}
+
 // Selectors
 // for hidden
 let overlay_ID = document.getElementById("overlay_ID");
@@ -27,11 +35,11 @@ let addPassForm = document.getElementById("addPassForm");
 // cardBox
 let cardBox = document.getElementById("cardBox");
 // Inside Overlay
-let site = document.getElementsByName("site")[0];
-let url = document.getElementsByName("url")[0];
-let login = document.getElementsByName("login")[0];
-let password = document.getElementsByName("password")[0];
-let category = document.getElementsByName("category")[0];
+let site = document.getElementById("site");
+let url = document.getElementById("url");
+let login = document.getElementById("login");
+let password = document.getElementById("password");
+let category = document.getElementById("categories");
 
 
 // Event Listeners
@@ -64,17 +72,21 @@ addPassForm.addEventListener("submit", function (e) {
         return response.json();
     }).then(function (data) {
         console.log(data);
+        if (data["success"] == "false") {
+            handleError(data);
+        } else {
+            // Add element
+            let card = `<div class="card">
+            <a href="${url.value}" target="_blank" class="cardFaceBox ${category.value}">${site.value}</a>
+            <div class="cardDetailsBox">
+            <h3 class="cardDetail">Login: ${login.value}</h3>
+            <h3 class="cardDetail cardDetailCategory">Category: ${category.value}</h3>
+            <h3 class="cardDetail">Last Updated: ${lastUpdated}</h3>
+            </div>
+            </div>`;
+            cardBox.innerHTML += card;
+        }
     });
-    // Add element
-    let card = `<div class="card">
-    <a href="${url.value}" target="_blank" class="cardFaceBox ${category.value}">${site.value}</a>
-    <div class="cardDetailsBox">
-    <h3 class="cardDetail">Login: ${login.value}</h3>
-    <h3 class="cardDetail">Category: ${category.value}</h3>
-    <h3 class="cardDetail">Last Updated: ${lastUpdated}</h3>
-    </div>
-    </div>`;
-    cardBox.innerHTML += card;
     // Remove Overlay
     remOverlay();
 });

@@ -61,7 +61,7 @@ def makePassDataList(r):
     password = r["password"]
     if site == "" or url == "" or login == "" or password == "":
         raise Exception("Invalid data provided ")
-    return [ r["site"], r["url"], r["login"], r["password"], r["category"], r["lastUpdated"], str(uuid.uuid4()) ]
+    return [ r["site"].capitalize() , r["url"], r["login"], r["password"], r["category"], r["lastUpdated"], str(uuid.uuid4()) ]
 
 # API function => makes note data list
 def makeNoteDataList(r):
@@ -80,7 +80,7 @@ def makeContactDataList(r):
         raise Exception("Invalid name")
     if not (re.search(regex,cemail)):  
         raise Exception("Not a valid email")
-    return [ cname, cemail, str(uuid.uuid4()) ]
+    return [ cname.capitalize(), cemail, str(uuid.uuid4()) ]
 
 # API function => updates email
 def emailUpdate(r):
@@ -94,19 +94,24 @@ def emailUpdate(r):
 # API function => share pass
 def sharePass_enc(r):
     r = json.loads(r)
-    text, method, key = r["text"], r["method"], r["key"]
+    text, method, key, contact = r["text"], r["method"], r["key"], r["contact"]
+    # Error checking
+    if (contact == "0") or (method=="UE" and key=="") or (text==""):
+        raise Exception("Value error")
+    
     if method == "UE":
-        fernetObj = Fernet(makeKEY(f'{key}'.encode()))
+        fernetObj = Fernet(makeKEY(f'{key+contact}'.encode()))
         encryptedText = fernetObj.encrypt(text.encode()).decode()
         return encryptedText
     elif method == "SE":
         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         X = ''.join(set(list(charset)))
         key = ''.join(random.choice(X) for _ in range(16))
+        key+=contact
         fernetObj1 = Fernet(makeKEY(f'{key}'.encode()))
         encryptedText1 = fernetObj1.encrypt(text.encode()).decode()
         fernetObj2 = Fernet(makeKEY(encryptedText1[0:16].encode()))
-        encryptedText2 = fernetObj2.encrypt(key.encode())
+        encryptedText2 = fernetObj2.encrypt(key.encode()).decode()
         msg = f"{encryptedText1}ō{encryptedText2}"
         return msg
 
@@ -120,5 +125,6 @@ def login_pass(username,password,checkData):
     try:
         getFernetObj(username,password).decrypt(checkData)
     except Exception as e:
+        print("credential mismatch")
         passMatch = False
     return passMatch

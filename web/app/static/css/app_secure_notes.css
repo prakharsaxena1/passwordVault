@@ -56,10 +56,8 @@ main {
 /* Note */
 .note {
   margin: 16px 20px;
-  min-width: 240px;
-  max-width: 280px;
-  min-height: 240px;
-  max-height: 260px;
+  width: 300px;
+  height: 280px;
   overflow: hidden;
   background: #0000006c;
   backdrop-filter: blur(6.5px);
@@ -67,21 +65,10 @@ main {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  overflow-y: auto;
 }
-.btns {
+.update {
   width: 100%;
   height: 30px;
-  display: flex;
-}
-.btns > div {
-  text-transform: uppercase;
-}
-.update,
-.delete,
-.pin {
-  width: 50%;
   padding-top: 5px;
   padding-bottom: 5px;
   cursor: pointer;
@@ -89,35 +76,29 @@ main {
   font-size: 16px;
   font-weight: bold;
   color: #ffffff;
-  transition: background-color, color 400ms cubic-bezier(0.32, 0.01, 0.5, 0.99);
 }
 .update:hover {
   background-color: #0e9652;
-}
-.delete:hover {
-  background-color: #e73b3b;
-}
-.pin:hover {
-  background-color: #8204bd;
-  color: #000;
+  transition: all 400ms cubic-bezier(0.32, 0.01, 0.5, 0.99);
 }
 .noteContent {
   padding: 10px;
-  min-height: 140px;
+  height: calc(100% - 30px);
   color: #f8f8f8;
 }
-.pin {
-  width: 100%;
-}
 .noteTitle {
-  letter-spacing: 1px;
   margin-bottom: 5px;
 }
 .noteDescription {
   font-size: 18px;
-  line-height: 20px;
   overflow: hidden;
   overflow-y: auto;
+  height: 75%;
+  white-space: pre-wrap;
+}
+.dateUpdated {
+  letter-spacing: 1px;
+  padding: 5px 0px;
 }
 
 /* Overlay */

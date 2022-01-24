@@ -17,23 +17,22 @@
   <!-- Notes box -->
   <div id="notesBox">
     {% for note in notes %}
+
     <!-- Note -->
     <div class="note" id="{{ note.4 }}">
-      <!-- Control buttons -->
-      <div class="btns">
-        <div class="update">Update</div>
-        <div class="delete">Delete</div>
-      </div>
+
       <!-- main note -->
       <div class="noteContent">
         <h5 class="dateUpdated">{{ note.2 }}</h5>
         <h2 class="noteTitle">{{ note.0 }}</h2>
         <p class="noteDescription">{{ note.1 }}</p>
       </div>
-      <div class="btns">
-        <div class="pin">pin note</div>
-      </div>
+
+      <!-- Update button -->
+      <div class="update">Update</div>
+
     </div>
+
     {% endfor %}
   </div>
 

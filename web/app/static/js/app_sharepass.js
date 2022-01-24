@@ -29,6 +29,7 @@ shareBtn.addEventListener("click", function (e) {
     let passData = {
         "text": textFilled.value,
         "method": encryption_category.value,
+        "contact": contactSelect.value,
         "key": keyFilled.value
     }
     console.log(passData);
@@ -43,7 +44,7 @@ shareBtn.addEventListener("click", function (e) {
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data["msg"]);
+        enc_out.value = data["msg"];
     });
 
     clearText();

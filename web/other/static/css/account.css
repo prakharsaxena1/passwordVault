@@ -11,8 +11,6 @@ main {
 .panelBox {
   width: calc( 100vw - 580px );
   background: #03030366;
-  backdrop-filter: blur(7.5px);
-  -webkit-backdrop-filter: blur(7.5px);
   display: flex;
   flex-direction: column;
   justify-content: center;
