@@ -20,6 +20,7 @@
 
     <!-- Note -->
     <div class="note" id="{{ note.4 }}">
+      <i class="fas fa-times" onclick="removeNote(this)"></i>
 
       <!-- main note -->
       <div class="noteContent">
@@ -43,7 +44,7 @@
 <div id="addNoteBox_ID" class="addNoteBox hidden">
   <h2 class="title_text">Add a note!</h2>
   <div class="addNoteFields">
-    <form action="js_requests/add_note" method="post" id="addNoteForm">
+    <form method="post" id="addNoteForm">
       {% csrf_token %}
       <div class="formField">
         <input

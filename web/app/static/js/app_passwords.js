@@ -14,6 +14,36 @@ function addOverlay() {
     category.value = "other";
 }
 
+function deleteThis(ele) {
+    let id = ele.parentElement.id;
+    let passData = {
+        "id": id
+    }
+    console.log(id);
+    fetch("js_requests/deletePassword", {
+        method: "DELETE",
+        body: JSON.stringify(passData),
+        headers: {
+            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if (data["success"] == "true") {
+            let temp = document.getElementById(id);
+            temp.classList.add("slowRemove");
+            temp.addEventListener("transitionend", () => {
+                temp.remove();
+            });
+        } else {
+            console.log("Unable to remove");
+        }
+    })
+};
+
 function myFunction() {
     if (password.type === "password") {
         password.type = "text";
@@ -21,7 +51,14 @@ function myFunction() {
         password.type = "password";
     }
 }
-
+function actionPassword(ele) {
+    // Get ID
+    let id = ele.id;
+    // Remove Overlay
+    remOverlay();
+    // Fill data
+    
+}
 // Selectors
 // for hidden
 let overlay_ID = document.getElementById("overlay_ID");
@@ -76,13 +113,14 @@ addPassForm.addEventListener("submit", function (e) {
             handleError(data);
         } else {
             // Add element
-            let card = `<div class="card">
+            let card = `<div class="card" id="${data['id']}" onclick="actionPassword(this)">
             <a href="${url.value}" target="_blank" class="cardFaceBox ${category.value}">${site.value}</a>
             <div class="cardDetailsBox">
             <h3 class="cardDetail">Login: ${login.value}</h3>
             <h3 class="cardDetail cardDetailCategory">Category: ${category.value}</h3>
             <h3 class="cardDetail">Last Updated: ${lastUpdated}</h3>
             </div>
+            <div class="deleteBtn" onclick="deleteThis(this)">Delete</div>
             </div>`;
             cardBox.innerHTML += card;
         }

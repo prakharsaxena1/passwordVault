@@ -1,3 +1,7 @@
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function overlayFunction() {
     overlay_logout.classList.toggle("hidden");
 }

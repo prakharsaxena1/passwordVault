@@ -10,7 +10,34 @@ function addOverlay() {
   title_AN.value = "";
   desc_AN.value = "";
 }
-
+function removeNote(ele) {
+  let id = ele.parentElement.id;
+  let passData = {
+    "id": id
+  }
+  fetch("js_requests/deleteNote", {
+    method: "DELETE",
+    body: JSON.stringify(passData),
+    headers: {
+      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    console.log(data);
+    if (data["success"] == "true") {
+      let temp = document.getElementById(id);
+      temp.classList.add("scaleRemove");
+      temp.addEventListener("transitionend", () => {
+        temp.remove();
+      });
+    } else {
+      console.log("Unable to remove");
+    }
+  })
+}
 // Selectors
 // for hidden
 let overlay_ID = document.getElementById("overlay_ID");
@@ -70,7 +97,8 @@ addNoteForm.addEventListener("submit", function (e) {
       handleError(data);
     } else {
       // Add element
-      let note = `<div class="note">
+      let note = `<div class="note" id="${data["id"]}">
+       <i class="fas fa-times" onclick="removeNote(this)"></i>
           <!-- main note -->
           <div class="noteContent">
             <h5 class="dateUpdated">${lastUpdated}</h5>

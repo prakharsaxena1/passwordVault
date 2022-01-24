@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_protect
 # helpers
 from . import helpers
 
-
 # Create your views here.
 global context
 context = {
@@ -15,6 +14,7 @@ context = {
     "contacts": []
 }
 
+# Context handlers
 def getContext():
     return context
 
@@ -23,8 +23,6 @@ def setContext(context_new):
     context["passwords"] = context_new["passwords"]
     context["notes"] = context_new["notes"]
     context["contacts"] = context_new["contacts"]
-    # print("\n::::::::~  CONTEXT UPDATED  ~::::::::\n")
-    # print(context)
 
 def checkContext():
     if context["userinfo"] == []:
@@ -37,12 +35,6 @@ def app_account_handler(request, x):
         username = request.POST["username"]
         password = request.POST["password"]
         userfile = request.FILES['userfile'].readlines()
-        print()
-        print(username)
-        print()
-        print(password)
-        print()
-        print(userfile)
         if helpers.login_pass(username, password, userfile[0]):
             fObj = helpers.getFernetObj(username,password)
             for i in userfile:
@@ -69,6 +61,7 @@ def app_account_handler(request, x):
 def app_home(request):
     return render(request, "app_home.html")
 
+# Download userfile
 def downloadUserfile():
     localContext = getContext()
     print(localContext)
@@ -139,7 +132,7 @@ def js_requests(request,service):
             localContext = getContext()
             localContext["passwords"].append(passwordInfo)
             setContext(context_new=localContext)
-            return HttpResponse(helpers.httpDump({"success": "true", "msg": "password_added"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "password_added", "id": passwordInfo[-1]}))
         
         elif service == "add_note":
             try:
@@ -150,7 +143,7 @@ def js_requests(request,service):
             localContext = getContext()
             localContext["notes"].append(noteList)
             setContext(context_new=localContext)
-            return HttpResponse(helpers.httpDump({"success": "true", "msg": "note_added"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "note_added", "id": noteList[-1]}))
         
         elif service == "addContact":
             try:
@@ -161,7 +154,7 @@ def js_requests(request,service):
             localContext = getContext()
             localContext["contacts"].append(contact)
             setContext(context_new=localContext)
-            return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully added"}))
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully added",  "id": contact[-1]}))
         
         elif service == "changeEmail":
             try:
@@ -181,5 +174,48 @@ def js_requests(request,service):
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Encryption error", "msgD": "Data provided is incomplete, check method used."}))
             return HttpResponse(helpers.httpDump({"success": "true", "msg": x}))
 
-    return render(request, "404.html")
+    elif request.method == "DELETE":
+        if service == "deletePassword":
+            localContext = getContext()
+            try:
+                passwordInfo = helpers.removeDataList(request.body.decode(), dataList=localContext["passwords"])
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", 
+                                                      "msgT": "Unable to delete password",
+                                                      "msgD": "ID supplied does not match any data in the database."}))
+            localContext["passwords"] = passwordInfo
+            setContext(context_new=localContext)
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "password deleted"}))
+        
+        elif service == "deleteContact":
+            localContext = getContext()
+            try:
+                contact = helpers.removeDataList(request.body.decode(), dataList=localContext["contacts"])
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", 
+                                                      "msgT": "Unable to delete password",
+                                                      "msgD": "ID supplied does not match any data in the database."}))
+            localContext["contacts"] = contact
+            setContext(context_new=localContext)
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully removed"}))
+        
+        elif service == "deleteNote":
+            localContext = getContext()
+            try:
+                noteList = helpers.removeDataList(request.body.decode(), dataList=localContext["notes"])
+            except Exception as e:
+                return HttpResponse(helpers.httpDump({"success": "false", 
+                                                      "msgT": "Unable to delete password",
+                                                      "msgD": "ID supplied does not match any data in the database."}))
+            localContext["notes"] = noteList
+            setContext(context_new=localContext)
+            return HttpResponse(helpers.httpDump({"success": "true", "msg": "note removed"}))
 
+    # elif request.method == "PUT":
+    #     if service == "updatePassword":
+    #         pass
+    #     if service == "updateContact":
+    #         pass
+    #     if service == "updateNote":
+    #         pass
+    return render(request, "404.html")

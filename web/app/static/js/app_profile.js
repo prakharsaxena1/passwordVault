@@ -1,3 +1,32 @@
+function removeContact(ele) {
+    let id = ele.parentElement.id;
+    let passData = {
+        "id": id
+    }
+    fetch("js_requests/deleteContact", {
+        method: "DELETE",
+        body: JSON.stringify(passData),
+        headers: {
+            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    }).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        console.log(data);
+        if (data["success"] == "true") {
+            let temp = document.getElementById(id);
+            temp.classList.add("scaleRemove");
+            temp.addEventListener("transitionend", () => {
+                temp.remove();
+            });
+        } else {
+            console.log("Unable to remove");
+        }
+    })
+}
+
 // Selectors
 let contactsBox = document.getElementById("contactsBox");
 let yourEmail = document.getElementById("yourEmail");
@@ -40,7 +69,8 @@ addContactForm.addEventListener("submit", function (e) {
             handleError(data);
         } else {
             // Add element
-            let contact = `<div class="contact">
+            let contact = `<div class="contact" id="${data["id"]}">
+            <i class="fas fa-times" onclick="removeContact(this)"></i>
             <h2 class="contactName">${name}</h2>
             <h2 class="contactEmail">${email_AC.value}</h2>
             </div>`;
@@ -78,5 +108,5 @@ changeEmailForm.addEventListener("submit", function (e) {
             email_CE.value = "";
         }
     });
-    
+
 });

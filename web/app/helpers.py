@@ -115,6 +115,18 @@ def sharePass_enc(r):
         msg = f"{encryptedText1}ō{encryptedText2}"
         return msg
 
+# APIs to delete data:
+# Remove datalist with id
+def removeDataList(r, dataList):
+    r = json.loads(r)
+    id = r["id"]
+    temp = []
+    for i in dataList:
+        if i[-1]==id:
+            continue
+        temp.append(i)
+    return temp
+
 # for returning JSON response
 def httpDump(x):
     return json.dumps(x)
