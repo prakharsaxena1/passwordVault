@@ -1,9 +1,8 @@
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function overlayFunction() {
     overlay_logout.classList.toggle("hidden");
+}
+function toggleErrorBox() {
+    errorOverlay.classList.toggle("hidden");
 }
 
 function handleError(data) {
@@ -11,7 +10,7 @@ function handleError(data) {
           <div class="errMsg"><i class="fas fa-exclamation-triangle"></i>${data["msgT"]}</div>
           <p class="errMsgDesc">${data["msgD"]}</p>
           <div id="okBtn" onclick="toggleErrorBox()">Ok</div>
-        </div>`
+          </div>`
     errorOverlay.innerHTML = errorBox;
     errorOverlay.classList.toggle("hidden");
 }
@@ -21,17 +20,16 @@ let logout = document.getElementById("logout");
 let overlay_logout = document.getElementById("overlay_logout");
 let yesBtn = document.getElementById("yesBtn");
 let noBtn = document.getElementById("noBtn");
+
 // error overlay
 let errorOverlay = document.getElementById("errorOverlay");
 let okBtn = document.getElementById("okBtn");
 
+// Headers
+let headers = { "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value, 'Content-Type': 'application/json', 'Accept': 'application/json' }
 logout.addEventListener("click", overlayFunction);
 noBtn.addEventListener("click", overlayFunction);
 yesBtn.addEventListener("click", function () {
     fetch("logout");
     location.href = '/account/';
 });
-
-function toggleErrorBox() {
-    errorOverlay.classList.toggle("hidden");
-};

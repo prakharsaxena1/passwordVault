@@ -21,10 +21,8 @@ regex = '^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$'
 
 # =================== Functions
 def makeKEY(passgiven):  # Generating a AES Key according to the user provided password *inserts smart meme*
-    salt = b''
-    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000, backend=default_backend())
-    key = base64.urlsafe_b64encode(kdf.derive(passgiven))
-    return key
+    kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=b'', iterations=100000, backend=default_backend())
+    return base64.urlsafe_b64encode(kdf.derive(passgiven))
 
 # Generates and returns fernet object for encryption and decryption
 def getFernetObj(username, password):
@@ -42,54 +40,45 @@ def genPassword(pref):
         charset+="0123456789"
     if settings[2] == "Y":
         charset+="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    X = ''.join(set(list(charset)))
-    pref_length = int(pref["length"])
-    m = ''
+    X, pref_length, m = ''.join(set(list(charset))), int(pref["length"]), ''
     uniqueness = (pref_length//2) + 2
-    mlen= len(m)
+    mlen = len(m)
     while mlen < uniqueness:
-        m=''.join(random.choice(X) for _ in range(pref_length))
+        m = ''.join(random.choice(X) for _ in range(pref_length))
         mlen = len(set(m))
     return json.dumps({"password": m})
 
 # API function => makes password data list
 def makePassDataList(r):
     r = json.loads(r)
-    site = r["site"]
-    url = r["url"]
-    login = r["login"]
-    password = r["password"]
+    site, url, login ,password = r["site"], r["url"], r["login"], r["password"]
     if site == "" or url == "" or login == "" or password == "":
         raise Exception("Invalid data provided ")
-    return [ r["site"].capitalize() , r["url"], r["login"], r["password"], r["category"], r["lastUpdated"], str(uuid.uuid4()) ]
+    return [ site.capitalize() , url, login, password, r["category"], r["lastUpdated"], str(uuid.uuid4()) ]
 
 # API function => makes note data list
 def makeNoteDataList(r):
     r = json.loads(r)
-    title, description, lastUpdated, isPinned = r["title_AN"], r["desc_AN"], r["lastUpdated"], r["isPinned"]
+    title, description = r["title_AN"], r["desc_AN"]
     if title == "" and description == "":
         raise Exception("Note is empty")
-    return [title, description, lastUpdated, isPinned, str(uuid.uuid4())]
+    return [title, description, r["lastUpdated"], str(uuid.uuid4())]
 
 # API function => make contact data list
 def makeContactDataList(r):
     r = json.loads(r)
-    cname = r["cname"]
-    cemail = r["cemail"]
-    if cname == "":
+    if r["cname"] == "":
         raise Exception("Invalid name")
-    if not (re.search(regex,cemail)):  
+    if not (re.search(regex, r["cemail"])):  
         raise Exception("Not a valid email")
-    return [ cname.capitalize(), cemail, str(uuid.uuid4()) ]
+    return [ r["cname"].capitalize(), r["cemail"], str(uuid.uuid4()) ]
 
 # API function => updates email
 def emailUpdate(r):
     r = json.loads(r)
-    email = r["updatedEmail"]
-    if(re.search(regex,email)):   
-        return email
-    else:
-        raise Exception("Not a valid email")
+    if(re.search(regex, r["updatedEmail"])):   
+        return r["updatedEmail"]
+    raise Exception("Not a valid email")
     
 # API function => share pass
 def sharePass_enc(r):
@@ -101,30 +90,57 @@ def sharePass_enc(r):
     
     if method == "UE":
         fernetObj = Fernet(makeKEY(f'{key+contact}'.encode()))
-        encryptedText = fernetObj.encrypt(text.encode()).decode()
-        return encryptedText
+        return fernetObj.encrypt(text.encode()).decode()
     elif method == "SE":
         charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         X = ''.join(set(list(charset)))
-        key = ''.join(random.choice(X) for _ in range(16))
-        key+=contact
+        key = ''.join(random.choice(X) for _ in range(16)) + contact
         fernetObj1 = Fernet(makeKEY(f'{key}'.encode()))
         encryptedText1 = fernetObj1.encrypt(text.encode()).decode()
         fernetObj2 = Fernet(makeKEY(encryptedText1[0:16].encode()))
         encryptedText2 = fernetObj2.encrypt(key.encode()).decode()
-        msg = f"{encryptedText1}ō{encryptedText2}"
-        return msg
+        return f"{encryptedText1}ō{encryptedText2}"
+
+# API function => Get Password From ID
+def getFromID(r, dataList):
+    r = json.loads(r)
+    for i in dataList:
+        if i[-1]==r["id"]:
+            return i
+    raise Exception("No data found with given ID")
 
 # APIs to delete data:
 # Remove datalist with id
 def removeDataList(r, dataList):
     r = json.loads(r)
+    for i in dataList:
+        if i[-1]==r["id"]:
+            dataList.remove(i)
+    return dataList
+
+def getUpdatedList(d, oldList):
+    for j in range(len(d)):
+        if d[j] == "":
+            d[j]=oldList[j]
+    return d
+
+# Update datalist with id
+def updateDataList(r, dataList, service):
+    r = json.loads(r)
     id = r["id"]
     temp = []
     for i in dataList:
-        if i[-1]==id:
-            continue
+        if i[-1]==id and service == "updatePassword":
+            d = [r["site"] , r["url"], r["login"], r["password"], r["category"]]
+            i = getUpdatedList(d, i) + [ r["lastUpdated"], id ]
+        elif i[-1]==id and service == "updateContact":
+            d = [r["cname"], r["cemail"]]
+            i = getUpdatedList(d, i) + [ id ]
+        elif i[-1]==id and service == "updateNote":
+            d = [r["title_AN"], r["desc_AN"]]
+            i = getUpdatedList(d, i) + [ r["lastUpdated"], id ]
         temp.append(i)
+        print("\n", i ,"\n")
     return temp
 
 # for returning JSON response

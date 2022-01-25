@@ -2,7 +2,6 @@
 let myRange = document.getElementById("myRange");
 let lengthValue = document.getElementById("lengthValue");
 lengthValue.innerHTML = myRange.value;
-
 myRange.oninput = function () {
     lengthValue.innerHTML = this.value;
 }
@@ -22,19 +21,15 @@ generateBtn.addEventListener("click", function () {
     symbols.checked ? str += "Y" : str += "N";
     numbers.checked ? str += "Y" : str += "N";
     symbolCase.checked ? str += "Y" : str += "N";
-    let pref = {
+    let passData = {
         "settings": str,
         "length": myRange.value
     }
 
     fetch("js_requests/getPassword", {
         method: "POST",
-        body: JSON.stringify(pref),
-        headers: {
-            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        body: JSON.stringify(passData),
+        headers: headers
     }).then(function (response) {
         return response.json();
     }).then(function (data) {

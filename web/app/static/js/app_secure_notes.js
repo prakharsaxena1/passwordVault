@@ -78,8 +78,7 @@ addNoteForm.addEventListener("submit", function (e) {
   let passData = {
     "title_AN": title_AN.value,
     "desc_AN": desc_AN.value,
-    "lastUpdated": lastUpdated,
-    "isPinned": "NP"
+    "lastUpdated": lastUpdated
   }
   fetch("js_requests/add_note", {
     method: "POST",
