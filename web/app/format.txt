@@ -5,7 +5,7 @@ password:
 [0::site, 1::url, 2::login, 3::password, 4::category, 5::dateUpdated, 6::uid]
 
 note:
-[0::title, 1::description, 2::dateUpdated, 3::isPinned("PI" or "NP"), 4::uid]
+[0::title, 1::description, 2::dateUpdated, 3::uid]
 
 contact:
 [0::cname, 1::cemail, 2::uid]

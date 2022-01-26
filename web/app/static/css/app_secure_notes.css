@@ -6,7 +6,6 @@ main {
 
 /* Main css */
 .display {
-  width: 100%;
   height: 100%;
   padding: 15px;
   display: flex;
@@ -17,12 +16,10 @@ main {
 .title_text {
   padding: 10px;
   color: #ffffff;
-  width: fit-content;
-  margin: auto;
+  text-align: center;
 }
 #createNoteBtn {
   background-color: #f2f1ef;
-  width: fit-content;
   padding: 10px 35px;
   font-size: 18px;
   font-weight: 800;
@@ -40,11 +37,9 @@ main {
 }
 /* Notes box */
 #notesBox {
-  width: 100%;
   overflow: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-  padding: 1rem;
   display: flex;
   flex-wrap: wrap;
   background: rgba(5, 5, 5, 0.25);
@@ -56,15 +51,15 @@ main {
 /* Note */
 .note {
   margin: 16px 20px;
-  width: 300px;
+  min-width: 260px;
+  max-width: 300px;
+  justify-content: space-around;
   height: 280px;
   overflow: hidden;
   background: #0000006c;
   backdrop-filter: blur(6.5px);
   -webkit-backdrop-filter: blur(6.5px);
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
   position: relative;
 }
 .update {
@@ -110,34 +105,25 @@ main {
 }
 
 /* Overlay */
-
 .addNoteBox {
-  padding: 30px;
-  width: 520px;
+  padding: 1rem;
+  width: 500px;
   text-align: center;
   background: #00000080;
-  backdrop-filter: blur(5.5px);
-  -webkit-backdrop-filter: blur(4.5px);
-  display: flex;
-  flex-direction: column;
   position: absolute;
-  top: 15%;
+  top: 20%;
   left: 30%;
   z-index: 99;
 }
-
-.addNoteFields,
-.addNoteFields form {
+.addNoteFields, .addNoteFields form {
   width: 100%;
   height: 400px;
 }
-
 .addNoteFields form {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-
 .formField {
   margin: auto;
   width: 90%;
@@ -145,7 +131,6 @@ main {
   justify-content: space-between;
   align-items: baseline;
 }
-
 .btnsBox {
   width: 100%;
   height: fit-content;
@@ -153,7 +138,6 @@ main {
   display: flex;
   justify-content: space-around;
 }
-
 .btn {
   padding: 10px 20px;
   border: 1px solid black;
@@ -162,20 +146,16 @@ main {
   cursor: pointer;
   border-radius: 5px;
 }
-
 #cancelBtn {
   background-color: #e3e2e2;
   padding-top: 12px;
   font-size: 20px;
 }
-
 #addNoteBtn {
   background-color: #003171;
   color: #e3e2e2;
 }
-
-input,
-textarea {
+input, textarea {
   width: 100%;
   height: 50px;
   border: 0;
@@ -185,7 +165,6 @@ textarea {
   font-size: 20px;
   resize: none;
 }
-
 textarea {
-  height: 170px;
+  height: 200px;
 }

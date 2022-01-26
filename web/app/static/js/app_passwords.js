@@ -54,11 +54,11 @@ function actionPassword(ele) {
             console.log(data);
             if (data["success"] == "true") {
                 site.value = data["data"][0],
-                    url.value = data["data"][1],
-                    login.value = data["data"][2],
-                    password.value = data["data"][3],
-                    category.value = data["data"][4],
-                    addPassForm.holdID = data["data"][6]
+                url.value = data["data"][1],
+                login.value = data["data"][2],
+                password.value = data["data"][3],
+                category.value = data["data"][4],
+                addPassForm.holdID = data["data"][6]
             } else {
                 console.log("Unable to fetch data");
             }
@@ -86,8 +86,11 @@ let category = document.getElementById("categories");
 
 // Event Listeners
 cancelBtn.addEventListener("click", remOverlay);
+
 saveBtn.addEventListener("click", remOverlay);
+
 addBtn.addEventListener("click", addOverlay);
+
 addPassForm.addEventListener("submit", function (e) {
     // Prevent reloading
     e.preventDefault();
@@ -101,21 +104,21 @@ addPassForm.addEventListener("submit", function (e) {
         fetch("js_requests/add_password", { method: "POST", body: JSON.stringify(passData), headers: headers })
             .then(function (response) {
                 return response.json();
-            }).then(function (data) {
+            })
+            .then(function (data) {
                 console.log(data);
                 if (data["success"] == "false") {
                     handleError(data);
                 } else {
                     // Add element
-                    let card = `<div class="card" id="${data['id']}">
-                <a href="${url.value}" target="_blank" class="cardFaceBox ${category.value}"  id="${data['id']}site">${site.value}</a>
-                <div class="cardDetailsBox" onclick="actionPassword(this)>
-                <h3 class="cardDetail">Login: <span id="${data['id']}login">${login.value}</span></h3>
-                <h3 class="cardDetail cardDetailCategory">Category: <span id="${data['id']}category">${category.value}</span></h3>
-                <h3 class="cardDetail">Last Updated: <span id="${data['id']}lastUpdated">${lastUpdated}</span></h3>
-                </div>
-                <div class="deleteBtn" onclick="deleteThis(this)">Delete</div>
-                </div>`;
+                    let card = `<div class="card" id="${data['id']}" >
+                        <a href="${url.value}" target="_blank" class="cardFaceBox ${category.value}" id="${data['id']}site">${site.value}</a>
+                        <div class="cardDetailsBox" onclick="actionPassword(this)">
+                        <h3 class="cardDetail">Login: <span id="${data['id']}login">${login.value}</span></h3>
+                        <h3 class="cardDetail cardDetailCategory">Category: <span id="${data['id']}category">${category.value}</span></h3>
+                        <h3 class="cardDetail">Last Updated: <span id="${data['id']}lastUpdated">${lastUpdated}</span></h3>
+                        </div>
+                        <div class="deleteBtn" onclick="deleteThis(this)">Delete</div></div>`;
                     cardBox.innerHTML += card;
                 }
             });
@@ -125,13 +128,12 @@ addPassForm.addEventListener("submit", function (e) {
         fetch("js_requests/updatePassword", { method: "PUT", body: JSON.stringify(passData), headers: headers })
             .then(function (response) {
                 return response.json();
-            }).then(function (data) {
-                console.log(data);
+            })
+            .then(function (data) {
                 if (data["success"] == "false") {
                     handleError(data);
                 } else {
                     // Update element
-                    console.log(passData);
                     if (passData["site"] != "") {
                         document.getElementById(passData["id"] + "site").innerText = passData["site"];
                     }
@@ -146,10 +148,9 @@ addPassForm.addEventListener("submit", function (e) {
                         document.getElementById(passData["id"] + "site").classList.add(passData["category"]);
                     }
                     document.getElementById(passData["id"] + "lastUpdated").innerText = passData["lastUpdated"];
-                    
+
                 }
             });
-
     }
     // Remove Overlay
     remOverlay();

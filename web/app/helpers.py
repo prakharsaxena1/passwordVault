@@ -140,7 +140,6 @@ def updateDataList(r, dataList, service):
             d = [r["title_AN"], r["desc_AN"]]
             i = getUpdatedList(d, i) + [ r["lastUpdated"], id ]
         temp.append(i)
-        print("\n", i ,"\n")
     return temp
 
 # for returning JSON response

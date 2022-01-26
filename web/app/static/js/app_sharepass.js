@@ -11,16 +11,25 @@ let enc_out = document.getElementById("enc_out");
 let clearBtn = document.getElementById("clearBtn");
 let shareBtn = document.getElementById("shareBtn");
 
-
 // functions
 function clearText() {
     textFilled.value = "";
     keyFilled.value = "";
-    encryption_category.value = "SE";
+    encryption_category.value = "UE";
     contactSelect.value = "0";
     enc_out.value = "";
 }
 // Event listeners
+// encryption_category
+encryption_category.addEventListener("change", function () {
+    if (encryption_category.value == "SE") {
+        keyFilled.disabled = true;
+        keyFilled.style.backgroundColor = "#D3D3D3";
+    } else {
+        keyFilled.disabled = false;
+        keyFilled.removeAttribute("style");
+    }
+})
 // Clear button
 clearBtn.addEventListener("click", clearText);
 // Share button

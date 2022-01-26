@@ -2,7 +2,7 @@
 {% load static %} 
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/app_secure_notes.css' %}" />
-{% endblock css %} 
+{% endblock css %}
 {% block main %}
 <!-- Add notes -->
 <div class="display">
@@ -19,18 +19,16 @@
     {% for note in notes %}
 
     <!-- Note -->
-    <div class="note" id="{{ note.4 }}">
+    <div class="note" id="{{ note.3 }}">
       <i class="fas fa-times" onclick="removeNote(this)"></i>
-
       <!-- main note -->
       <div class="noteContent">
-        <h5 class="dateUpdated">{{ note.2 }}</h5>
-        <h2 class="noteTitle">{{ note.0 }}</h2>
-        <p class="noteDescription">{{ note.1 }}</p>
+        <h5 class="dateUpdated" id="{{ note.3 }}lastUpdated">{{ note.2 }}</h5>
+        <h2 class="noteTitle" id="{{ note.3 }}title_AN">{{ note.0 }}</h2>
+        <p class="noteDescription" id="{{ note.3 }}desc_AN">{{ note.1 }}</p>
       </div>
-
       <!-- Update button -->
-      <div class="update">Update</div>
+      <div class="update" onclick="actionNote(this)">Update</div>
 
     </div>
 
@@ -61,7 +59,7 @@
 
       <div class="btnsBox">
         <div class="btn" id="cancelBtn">CANCEL</div>
-        <input type="submit" class="btn" id="addNoteBtn" />
+        <input type="submit" class="btn" id="addNoteBtn" value="SUBMIT" />
       </div>
 
     </form>

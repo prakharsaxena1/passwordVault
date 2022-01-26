@@ -12,21 +12,14 @@ function addOverlay() {
 }
 function removeNote(ele) {
   let id = ele.parentElement.id;
-  let passData = {
-    "id": id
-  }
+  let passData = { "id": id }
   fetch("js_requests/deleteNote", {
     method: "DELETE",
     body: JSON.stringify(passData),
-    headers: {
-      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
+    headers: headers
   }).then(function (response) {
     return response.json();
   }).then(function (data) {
-    console.log(data);
     if (data["success"] == "true") {
       let temp = document.getElementById(id);
       temp.classList.add("scaleRemove");
@@ -37,6 +30,27 @@ function removeNote(ele) {
       console.log("Unable to remove");
     }
   })
+}
+function actionNote(ele) {
+  // Get ID
+  let id = ele.parentElement.id;
+  // Remove Overlay
+  addOverlay();
+  // Get data
+  fetch("js_requests/getNoteFromID", { method: "POST", body: JSON.stringify({ "id": id }), headers: headers })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      console.log(data);
+      if (data["success"] == "true") {
+        title_AN.value = data["data"][0];
+        desc_AN.value = data["data"][1];
+        addNoteForm.holdID = data["data"][3];
+      } else {
+        console.log("Unable to fetch data");
+      }
+    });
 }
 // Selectors
 // for hidden
@@ -54,7 +68,6 @@ let notesBox = document.getElementById("notesBox");
 let title_AN = document.getElementById("title_AN");
 let desc_AN = document.getElementById("desc_AN");
 
-
 // Event Listeners
 createNoteBtn.addEventListener("click", addOverlay);
 cancelBtn.addEventListener("click", remOverlay);
@@ -66,50 +79,63 @@ addNoteForm.addEventListener("submit", function (e) {
   // Make a post request
   let date = new Date();
   let lastUpdated = date.toLocaleString('en-US', {
-    weekday: 'short', // long, short, narrow
-    day: 'numeric', // numeric, 2-digit
-    year: 'numeric', // numeric, 2-digit
-    month: 'long', // numeric, 2-digit, long, short, narrow
-    hour: 'numeric', // numeric, 2-digit
-    minute: 'numeric', // numeric, 2-digit
-    second: 'numeric', // numeric, 2-digit
+    weekday: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    month: 'long',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
   });
-  console.log(lastUpdated);
-  let passData = {
-    "title_AN": title_AN.value,
-    "desc_AN": desc_AN.value,
-    "lastUpdated": lastUpdated
-  }
-  fetch("js_requests/add_note", {
-    method: "POST",
-    body: JSON.stringify(passData),
-    headers: {
-      "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
-  }).then(function (response) {
-    return response.json();
-  }).then(function (data) {
-    console.log(data);
-    if (data["success"] == "false") {
-      handleError(data);
-    } else {
-      // Add element
-      let note = `<div class="note" id="${data["id"]}">
+  let passData = { "title_AN": title_AN.value, "desc_AN": desc_AN.value, "lastUpdated": lastUpdated }
+  if (addNoteForm.holdID == undefined) {
+    fetch("js_requests/add_note", { method: "POST", body: JSON.stringify(passData), headers: headers })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        if (data["success"] == "false") {
+          handleError(data);
+        } else {
+          // Add element
+          let note = `<div class="note" id="${data["id"]}">
        <i class="fas fa-times" onclick="removeNote(this)"></i>
           <!-- main note -->
           <div class="noteContent">
-            <h5 class="dateUpdated">${lastUpdated}</h5>
-            <h2 class="noteTitle">${title_AN.value}</h2>
-            <p class="noteDescription">${desc_AN.value}</p>
+            <h5 class="dateUpdated" id="${data["id"]}lastUpdated">${lastUpdated}</h5>
+            <h2 class="noteTitle" id="${data["id"]}title_AN">${title_AN.value}</h2>
+            <p class="noteDescription" id="${data["id"]}desc_AN">${desc_AN.value}</p>
           </div>          
           <!-- Update button -->
-          <div class="update">Update</div>
+          <div class="update" onclick="actionNote(this)">Update</div>
         </div>`;
-      notesBox.innerHTML += note;
-    }
-  });
+          notesBox.innerHTML += note;
+        }
+      });
+  } else {
+    passData["id"] = addNoteForm.holdID;
+    addNoteForm.holdID = undefined;
+    fetch("js_requests/updateNote", { method: "PUT", body: JSON.stringify(passData), headers: headers })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data);
+        if (data["success"] == "false") {
+          handleError(data);
+        } else {
+          if (passData["title_AN"] != "") {
+            document.getElementById(passData["id"] + "title_AN").innerText = passData["title_AN"];
+          }
+          if (passData["desc_AN"] != "") {
+            document.getElementById(passData["id"] + "desc_AN").innerText = passData["desc_AN"];
+          }
+          if (passData["lastUpdated"] != "") {
+            document.getElementById(passData["id"] + "lastUpdated").innerText = passData["lastUpdated"];
+          }
+        }
+      });
+  }
   // Remove Overlay
   remOverlay();
 });
