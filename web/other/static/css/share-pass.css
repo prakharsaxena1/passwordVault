@@ -1,23 +1,17 @@
 main {
-  width: 100%;
-  height: calc(100vh - 64px);
-  padding: 20px;
   display: flex;
   justify-content: center;
-  overflow: hidden;
-  background-image: linear-gradient(to top right, #0000007e, #8a8a8a70),
-    url(https://source.unsplash.com/1920x1080/?abstract);
-  background-repeat: no-repeat;
-  background-size: cover;
 }
-
-.box {
-  width: 600px;
+.box{
+  margin: auto;
+}
+#sharepassForm {
+  width: 1000px;
   padding: 20px;
-  height: 500px;
+  height: 850px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   margin: auto;
   text-align: center;
   background: rgba(49, 51, 59, 0.25);
@@ -28,16 +22,21 @@ main {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-textarea {
-  resize: none;
-  font-size: 20px;
+input, select, textarea {
   padding: 10px;
+  font-size: 20px;
+  border: 0;
   outline: 0;
   border-radius: 5px;
-  width: 100%;
-  height: 250px;
   background: #3b3b3b;
   color: antiquewhite;
+  height: 50px;
+}
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 240px;
 }
 
 .btn {
@@ -50,6 +49,7 @@ textarea {
   text-decoration: none;
   display: inline-block;
   font-size: 25px;
+  cursor: pointer;
 }
 
 .btn:hover {

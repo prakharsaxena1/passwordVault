@@ -33,8 +33,9 @@ encryption_category.addEventListener("change", function () {
 // Clear button
 clearBtn.addEventListener("click", clearText);
 // Share button
-shareBtn.addEventListener("click", function (e) {
+sharepassForm.addEventListener("submit", function (e) {
     e.preventDefault();
+
     let passData = {
         "text": textFilled.value,
         "method": encryption_category.value,
@@ -42,19 +43,13 @@ shareBtn.addEventListener("click", function (e) {
         "key": keyFilled.value
     }
     console.log(passData);
-    fetch("js_requests/sharePass", {
-        method: "POST",
-        body: JSON.stringify(passData),
-        headers: {
-            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        enc_out.value = data["msg"];
-    });
+
+    fetch("js_requests/sharePass", { method: "POST", body: JSON.stringify(passData), headers: headers })
+        .then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            enc_out.value = data["msg"];
+        });
 
     clearText();
 });

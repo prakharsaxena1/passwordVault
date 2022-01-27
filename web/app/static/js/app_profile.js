@@ -6,11 +6,7 @@ function removeContact(ele) {
     fetch("js_requests/deleteContact", {
         method: "DELETE",
         body: JSON.stringify(passData),
-        headers: {
-            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        headers: headers
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -56,11 +52,7 @@ addContactForm.addEventListener("submit", function (e) {
     fetch("js_requests/addContact", {
         method: "POST",
         body: JSON.stringify(passData),
-        headers: {
-            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        headers: headers
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
@@ -91,11 +83,7 @@ changeEmailForm.addEventListener("submit", function (e) {
     fetch("js_requests/changeEmail", {
         method: "POST",
         body: JSON.stringify(passData),
-        headers: {
-            "X-CSRFToken": document.getElementsByName("csrfmiddlewaretoken")[0].value,
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        }
+        headers: headers
     }).then(function (response) {
         return response.json();
     }).then(function (data) {

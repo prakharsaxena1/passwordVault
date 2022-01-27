@@ -84,6 +84,7 @@ def emailUpdate(r):
 def sharePass_enc(r):
     r = json.loads(r)
     text, method, key, contact = r["text"], r["method"], r["key"], r["contact"]
+    print(r)
     # Error checking
     if (contact == "0") or (method=="UE" and key=="") or (text==""):
         raise Exception("Value error")
@@ -101,6 +102,24 @@ def sharePass_enc(r):
         encryptedText2 = fernetObj2.encrypt(key.encode()).decode()
         return f"{encryptedText1}ō{encryptedText2}"
 
+def sharepassDecrypt(r):
+    r = json.loads(r)
+    encCode = r["encCode"]
+    encType = r["encType"]
+    contact = r["contact"]
+    if encType == "SE":
+        enc1, enc2 = encCode.split("ō")
+        x = Fernet(makeKEY(f'{enc1[0:16]}'.encode()))
+        key = Fernet(makeKEY(x.decrypt(enc2.encode())))
+        plainFinal = key.decrypt(enc1.encode())
+        return plainFinal.decode()
+    elif encType == "UE":
+        print(r)
+        key = r["key"] + contact
+        fObj = Fernet(makeKEY(key.encode()))
+        plainFinal = fObj.decrypt(encCode.encode())
+        return plainFinal.decode()
+    
 # API function => Get Password From ID
 def getFromID(r, dataList):
     r = json.loads(r)
