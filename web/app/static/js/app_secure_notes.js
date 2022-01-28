@@ -36,21 +36,9 @@ function actionNote(ele) {
   let id = ele.parentElement.id;
   // Remove Overlay
   addOverlay();
-  // Get data
-  fetch("js_requests/getNoteFromID", { method: "POST", body: JSON.stringify({ "id": id }), headers: headers })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      console.log(data);
-      if (data["success"] == "true") {
-        title_AN.value = data["data"][0];
-        desc_AN.value = data["data"][1];
-        addNoteForm.holdID = data["data"][3];
-      } else {
-        console.log("Unable to fetch data");
-      }
-    });
+  title_AN.value = document.getElementById(id+"title_AN").innerText;
+  desc_AN.value = document.getElementById(id + "desc_AN").innerText;
+  addNoteForm.holdID = id;
 }
 // Selectors
 // for hidden

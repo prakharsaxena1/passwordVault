@@ -46,10 +46,6 @@ def app_account_handler(request, x):
     # If login failed or GET request
     return redirect("/account/")
 
-# Home page (app/)
-def app_home(request):
-    return render(request, "app_home.html")
-
 # Download userfile
 def downloadUserfile(localContext):
     fObj = helpers.getFernetObj(localContext["userinfo"][0], localContext["userinfo"][1])
@@ -67,9 +63,11 @@ def downloadUserfile(localContext):
 
 # Routes handler
 def routingFunction(request, service):
-    services = ["profile","passwordLab", "passwords", "secure_note", "sharepass", "download_uf", "logout" ]
+    services = ["home", "passwordLab", "logout", "profile", "passwords", "secure_note", "sharepass", "download_uf"]
     if checkContext() == True and service in services:
-        if service == "passwordLab":
+        if service == "home":
+            return render(request, "app_home.html")
+        elif service == "passwordLab":
             return render(request, "app_passwordLab.html")
         elif service == "logout":
             setContext({"userinfo":[],"passwords":[],"notes": [],"contacts": []})
@@ -146,20 +144,6 @@ def js_requests(request,service):
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to get password",
                                                       "msgD": "ID supplied does not match any data in the database."}))
             return HttpResponse(helpers.httpDump({"success": "true", "data": passdata}))
-        elif service == "getContactFromID":
-            try:
-                contactdata = helpers.getFromID(request.body.decode(), dataList=localContext["contacts"])
-            except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to get contact",
-                                                      "msgD": "ID supplied does not match any data in the database."}))
-            return HttpResponse(helpers.httpDump({"success": "true", "data": contactdata}))
-        elif service == "getNoteFromID":
-            try:
-                notedata = helpers.getFromID(request.body.decode(), dataList=localContext["notes"])
-            except Exception as e:
-                return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to get note",
-                                                      "msgD": "ID supplied does not match any data in the database."}))
-            return HttpResponse(helpers.httpDump({"success": "true", "data": notedata}))
 
     elif request.method == "DELETE":        
         if service == "deletePassword":

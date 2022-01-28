@@ -22,22 +22,17 @@ function removeContact(ele) {
         }
     })
 }
-
 // Selectors
 let contactsBox = document.getElementById("contactsBox");
 let yourEmail = document.getElementById("yourEmail");
-
 // Forms
 let addContactForm = document.getElementById("addContactForm");
 let changeEmailForm = document.getElementById("changeEmailForm");
-
 // addContactForm selectors
 let name_AC = document.getElementById("name_AC");
 let email_AC = document.getElementById("email_AC");
-
 // changeEmailForm selectors
 let email_CE = document.getElementById("email_CE");
-
 // Event Listeners
 addContactForm.addEventListener("submit", function (e) {
     let name = name_AC.value.charAt(0).toUpperCase() + name_AC.value.slice(1);
@@ -72,7 +67,6 @@ addContactForm.addEventListener("submit", function (e) {
         }
     });
 });
-
 changeEmailForm.addEventListener("submit", function (e) {
     // Prevent reloading
     e.preventDefault();

@@ -15,6 +15,8 @@ let shareBtn = document.getElementById("shareBtn");
 function clearText() {
     textFilled.value = "";
     keyFilled.value = "";
+    keyFilled.disabled = false;
+    keyFilled.removeAttribute("style");
     encryption_category.value = "UE";
     contactSelect.value = "0";
     enc_out.value = "";
