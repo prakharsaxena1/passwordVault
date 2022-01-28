@@ -1,14 +1,86 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}
-    GUIDE
-{% endblock title %}
-
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %} GUIDE {% endblock title %} 
 {% block css %}
-    <link rel="stylesheet" href="{% static 'css/guide.css' %}" />
-{% endblock css %}
-
+<link rel="stylesheet" href="{% static 'css/guide.css' %}" />
+{% endblock css %} 
 {% block main %}
+<div class="questionTile">
+  <h1 class="question">Why choose password vault?</h1>
+  <div class="Box">
+    <p>
+      PasswordVault is a password manager, to put it simply. Apart from password
+      storage, it can also be used for a variety of other tasks, such as storing
+      notes and contacts (securely, of course), sharing passwords with contacts,
+      and, finally, generating super secure passwords. Most password managers
+      that perform this function charge a fee, but that is not the case with
+      PasswordVault, which is always free. Now that we've covered what it is and
+      what it can do, it's time to get down to business.
+    </p>
+  </div>
+</div>
+
+<div class="questionTile">
+  <h1 class="question">Quick start guide</h1>
+  <h2 class="boxHeading">It's a five-step process that's easy to follow.</h2>
+  <div class="Box" id="stepsBox">      
+    <!-- Step 1 -->
+    <div class="steps">
+      <h2>Step 1: Install django and other dependencies.</h2>
+      <div class="stepDesc">
+        <p class="doFlex">
+          First step is to install django in your system, as PasswordVault uses
+          django for backend. It is a simple pip install to do, if you have
+          python3 in your system. Once that is done then 2 other modules must be
+          installed in the system: cryptography and uuid. the command is as
+          follows: 
+          <span>pip install cryptography</span>
+          <span>pip install uuid</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="steps">
+      <h2>Step 2: Download he application from github.</h2>
+      <div class="stepDesc">
+        <p>
+            Simply go to this <a href="https://github.com/prakharsaxena1/passwordVault" target="_blank" rel="noopener noreferrer">url</a> and git clone the repository. Once that is done, open the repository in the terminal and navigate to the "web" folder.
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="steps">
+      <h2>Step 3: Run the server.</h2>
+      <div class="stepDesc">
+        <p class="doFlex">
+            Once you are in this folder and every required module is installed, you can run server to start the app with the following command: <span>python manage.py runserver</span>
+        </p>
+      </div>
+    </div>
+    
+    <!-- Step 4 -->
+    <div class="steps">
+      <h2>Step 4: Register an account if you are a new user or login if you alredy have an account.</h2>
+      <div class="stepDesc">
+        <p>
+            Go to accounts page and click on register to register a new account on the app. Once you are inside the app, make necessary changes within the app and to save those changes make sure to download your vault (Download userfile).
+        </p>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="steps">
+      <h2>Step 5: It's pretty self-explanatory what to do once you're inside the app.</h2>
+      <div class="stepDesc">
+        <p>
+            Yes, its that simple.
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 {% endblock main %}

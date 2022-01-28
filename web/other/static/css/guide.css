@@ -1,0 +1,73 @@
+.questionTile {
+  background: #00000063;
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  margin-bottom: 20px;
+  width: 95%;
+  margin: 20px auto;
+  height: fit-content;
+}
+
+.question {
+  font-size: 60px;
+  color: var(--nav-color);
+  padding: 24px 0;
+  padding-left: 20px;
+  background-color: var(--btn-color);
+  text-transform: uppercase;
+}
+
+.Box {
+  padding: 1.6rem;
+  height: fit-content;
+}
+
+.Box > p {
+  padding: 20px;
+  line-height: 32px;
+  font-size: 25px;
+  letter-spacing: 1px;
+  color: var(--nav-color);
+}
+
+.boxHeading {
+  font-size: 2rem;
+  line-height: 2.1rem;
+  color: var(--nav-color);
+  letter-spacing: 1px;
+  padding: 15px 30px;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.steps h2 {
+  font-size: 34px;
+  color: var(--nav-color);
+  padding-left: 30px;
+}
+
+.doFlex{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.stepDesc > p{
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  color: var(--nav-color);
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+  line-height: 2rem;
+  min-height: fit-content;
+  max-height: 200px;
+}
+
+span{
+    text-decoration: underline;
+}
