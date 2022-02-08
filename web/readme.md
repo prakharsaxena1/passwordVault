@@ -12,7 +12,8 @@ What things you need to use the password Vault and how to install them
 - To Use this application python3 is **required**
 - **Required Modules:** 
 	- *cryptography*
-    - *django*
+	- *django*
+	- *uuid*
 
 ### Installing
 
@@ -20,6 +21,8 @@ What things you need to use the password Vault and how to install them
 pip install cryptography
 
 pip install django
+
+pip install uuid
 
 ```
 
