@@ -30,7 +30,7 @@ def getFernetObj(username, password):
 
 # API function => generates password
 def genPassword(pref):
-    pref = json.loads(pref)
+    # pref = json.loads(pref)
     # Default settings
     charset = "abcdefghijklmnopqrstuvwxyz"
     settings = pref["settings"]
@@ -50,7 +50,7 @@ def genPassword(pref):
 
 # API function => makes password data list
 def makePassDataList(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     site, url, login ,password = r["site"], r["url"], r["login"], r["password"]
     if site == "" or url == "" or login == "" or password == "":
         raise Exception("Invalid data provided ")
@@ -58,7 +58,7 @@ def makePassDataList(r):
 
 # API function => makes note data list
 def makeNoteDataList(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     title, description = r["title_AN"], r["desc_AN"]
     if title == "" and description == "":
         raise Exception("Note is empty")
@@ -66,7 +66,7 @@ def makeNoteDataList(r):
 
 # API function => make contact data list
 def makeContactDataList(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     if r["cname"] == "":
         raise Exception("Invalid name")
     if not (re.search(regex, r["cemail"])):  
@@ -75,16 +75,15 @@ def makeContactDataList(r):
 
 # API function => updates email
 def emailUpdate(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     if(re.search(regex, r["updatedEmail"])):   
         return r["updatedEmail"]
     raise Exception("Not a valid email")
     
 # API function => share pass
 def sharePass_enc(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     text, method, key, contact = r["text"], r["method"], r["key"], r["contact"]
-    print(r)
     # Error checking
     if (contact == "0") or (method=="UE" and key=="") or (text==""):
         raise Exception("Value error")
@@ -103,7 +102,7 @@ def sharePass_enc(r):
         return f"{encryptedText1}ō{encryptedText2}"
 
 def sharepassDecrypt(r):
-    r = json.loads(r)
+    # r = json.loads(r)
     encCode = r["encCode"]
     encType = r["encType"]
     contact = r["contact"]
@@ -122,7 +121,7 @@ def sharepassDecrypt(r):
     
 # API function => Get Password From ID
 def getFromID(r, dataList):
-    r = json.loads(r)
+    # r = json.loads(r)
     for i in dataList:
         if i[-1]==r["id"]:
             return i
@@ -131,7 +130,7 @@ def getFromID(r, dataList):
 # APIs to delete data:
 # Remove datalist with id
 def removeDataList(r, dataList):
-    r = json.loads(r)
+    # r = json.loads(r)
     for i in dataList:
         if i[-1]==r["id"]:
             dataList.remove(i)
@@ -145,7 +144,7 @@ def getUpdatedList(d, oldList):
 
 # Update datalist with id
 def updateDataList(r, dataList, service):
-    r = json.loads(r)
+    # r = json.loads(r)
     id = r["id"]
     temp = []
     for i in dataList:
@@ -164,6 +163,9 @@ def updateDataList(r, dataList, service):
 # for returning JSON response
 def httpDump(x):
     return json.dumps(x)
+
+def c2D(r):
+    return json.loads(r)
 
 # Check login
 def login_pass(username,password,checkData):

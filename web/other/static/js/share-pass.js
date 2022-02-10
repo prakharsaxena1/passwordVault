@@ -19,11 +19,7 @@ enc_category.addEventListener("change", function () {
 
 sharepassForm.addEventListener("submit", function (e) {
     e.preventDefault();
-    let passData = {
-        "encCode": textArea_input.value,
-        "encType": enc_category.value,
-        "contact": contact.value
-    }
+    let passData = { "encCode": textArea_input.value, "encType": enc_category.value, "contact": contact.value }
     if (enc_category.value == "UE") {
         passData["key"] = key.value
     }

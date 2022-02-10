@@ -37,14 +37,12 @@ clearBtn.addEventListener("click", clearText);
 // Share button
 sharepassForm.addEventListener("submit", function (e) {
     e.preventDefault();
-
     let passData = {
         "text": textFilled.value,
         "method": encryption_category.value,
         "contact": contactSelect.value,
         "key": keyFilled.value
     }
-    console.log(passData);
 
     fetch("js_requests/sharePass", { method: "POST", body: JSON.stringify(passData), headers: headers })
         .then(function (response) {

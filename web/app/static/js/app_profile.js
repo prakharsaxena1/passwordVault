@@ -1,26 +1,20 @@
 function removeContact(ele) {
     let id = ele.parentElement.id;
-    let passData = {
-        "id": id
-    }
-    fetch("js_requests/deleteContact", {
-        method: "DELETE",
-        body: JSON.stringify(passData),
-        headers: headers
-    }).then(function (response) {
+    let passData = { "id": id }
+    fetch("js_requests/deleteContact", { method: "DELETE", body: JSON.stringify(passData), headers: headers })
+        .then(function (response) {
         return response.json();
-    }).then(function (data) {
-        console.log(data);
-        if (data["success"] == "true") {
-            let temp = document.getElementById(id);
-            temp.classList.add("scaleRemove");
-            temp.addEventListener("transitionend", () => {
-                temp.remove();
-            });
-        } else {
-            console.log("Unable to remove");
-        }
-    })
+        }).then(function (data) {
+            if (data["success"] == "true") {
+                let temp = document.getElementById(id);
+                temp.classList.add("scaleRemove");
+                temp.addEventListener("transitionend", () => {
+                    temp.remove();
+                });
+            } else {
+                console.log("Unable to remove");
+            }
+        })
 }
 // Selectors
 let contactsBox = document.getElementById("contactsBox");
@@ -39,19 +33,12 @@ addContactForm.addEventListener("submit", function (e) {
     // Prevent reloading
     e.preventDefault();
     // Make a post request
-    let passData = {
-        'cname': name,
-        'cemail': email_AC.value
-    }
+    let passData = { 'cname': name, 'cemail': email_AC.value }
 
-    fetch("js_requests/addContact", {
-        method: "POST",
-        body: JSON.stringify(passData),
-        headers: headers
+    fetch("js_requests/addContact", { method: "POST", body: JSON.stringify(passData), headers: headers
     }).then(function (response) {
         return response.json();
     }).then(function (data) {
-        console.log(data);
         if (data["success"] == "false") {
             handleError(data);
         } else {
@@ -71,24 +58,19 @@ changeEmailForm.addEventListener("submit", function (e) {
     // Prevent reloading
     e.preventDefault();
     // Make a post request
-    let passData = {
-        "updatedEmail": email_CE.value
-    }
-    fetch("js_requests/changeEmail", {
-        method: "POST",
-        body: JSON.stringify(passData),
-        headers: headers
-    }).then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-        if (data["success"] == "false") {
-            handleError(data);
-        } else {
-            // Add element
-            yourEmail.innerHTML = email_CE.value;
-            email_CE.value = "";
-        }
-    });
+    let passData = { "updatedEmail": email_CE.value }
+    fetch("js_requests/changeEmail", { method: "POST", body: JSON.stringify(passData), headers: headers })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            if (data["success"] == "false") {
+                handleError(data);
+            } else {
+                // Add element
+                yourEmail.innerHTML = email_CE.value;
+                email_CE.value = "";
+            }
+        });
 
 });

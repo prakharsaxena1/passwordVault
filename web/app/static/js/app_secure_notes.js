@@ -13,23 +13,20 @@ function addOverlay() {
 function removeNote(ele) {
   let id = ele.parentElement.id;
   let passData = { "id": id }
-  fetch("js_requests/deleteNote", {
-    method: "DELETE",
-    body: JSON.stringify(passData),
-    headers: headers
-  }).then(function (response) {
-    return response.json();
-  }).then(function (data) {
-    if (data["success"] == "true") {
-      let temp = document.getElementById(id);
-      temp.classList.add("scaleRemove");
-      temp.addEventListener("transitionend", () => {
-        temp.remove();
-      });
-    } else {
-      console.log("Unable to remove");
-    }
-  })
+  fetch("js_requests/deleteNote", { method: "DELETE", body: JSON.stringify(passData), headers: headers})
+    .then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data["success"] == "true") {
+        let temp = document.getElementById(id);
+        temp.classList.add("scaleRemove");
+        temp.addEventListener("transitionend", () => {
+          temp.remove();
+        });
+      } else {
+        console.log("Unable to remove");
+      }
+    })
 }
 function actionNote(ele) {
   // Get ID
@@ -108,7 +105,6 @@ addNoteForm.addEventListener("submit", function (e) {
         return response.json();
       })
       .then(function (data) {
-        console.log(data);
         if (data["success"] == "false") {
           handleError(data);
         } else {

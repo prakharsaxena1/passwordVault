@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect 
 # helpers
 from . import helpers
+from .helpers import c2D
+
 
 # Create your views here.
 global context
@@ -94,10 +96,10 @@ def js_requests(request,service):
     localContext = getContext()
     if request.method == "POST":
         if service == "getPassword":
-            return HttpResponse(helpers.genPassword(request.body.decode()))
+            return HttpResponse(helpers.genPassword(c2D(request.body.decode())))
         elif service == "add_password":
             try:
-                passwordInfo = helpers.makePassDataList(request.body.decode())
+                passwordInfo = helpers.makePassDataList(c2D(request.body.decode()))
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Error adding password",
                                                       "msgD": "Some of the fields are missing, please fill all the required fields."}))
@@ -106,7 +108,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "password_added", "id": passwordInfo[-1]}))
         elif service == "add_note":
             try:
-                noteList = helpers.makeNoteDataList(request.body.decode())
+                noteList = helpers.makeNoteDataList(c2D(request.body.decode()))
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Note is empty",
                                                       "msgD":"The title and description for the note is missing, please fill all the required fields."}))
@@ -115,7 +117,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "note_added", "id": noteList[-1]}))
         elif service == "addContact":
             try:
-                contact = helpers.makeContactDataList(request.body.decode())
+                contact = helpers.makeContactDataList(c2D(request.body.decode()))
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Invalid data",
                                                       "msgD": "The date entered is not valid, please check before submitting again."}))
@@ -124,7 +126,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully added",  "id": contact[-1]}))
         elif service == "changeEmail":
             try:
-                updatedEmail = helpers.emailUpdate(request.body.decode())
+                updatedEmail = helpers.emailUpdate(c2D(request.body.decode()))
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Invalid email",
                                                       "msgD": "The provided email is not valid, please check the email before submitting again."}))
@@ -133,13 +135,13 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "Email updated"}))
         elif service == "sharePass":
             try:
-                x = helpers.sharePass_enc(request.body.decode())
+                x = helpers.sharePass_enc(c2D(request.body.decode()))
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Encryption error", "msgD": "Data provided is incomplete, check method used."}))
             return HttpResponse(helpers.httpDump({"success": "true", "msg": x}))
         elif service == "getPasswordFromID":
             try:
-                passdata = helpers.getFromID(request.body.decode(), dataList=localContext["passwords"])
+                passdata = helpers.getFromID(c2D(request.body.decode()), dataList=localContext["passwords"])
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to get password",
                                                       "msgD": "ID supplied does not match any data in the database."}))
@@ -148,7 +150,7 @@ def js_requests(request,service):
     elif request.method == "DELETE":        
         if service == "deletePassword":
             try:
-                passwordInfo = helpers.removeDataList(request.body.decode(), dataList=localContext["passwords"])
+                passwordInfo = helpers.removeDataList(c2D(request.body.decode()), dataList=localContext["passwords"])
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to delete password",
                                                       "msgD": "ID supplied does not match any data in the database."}))
@@ -157,7 +159,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "password deleted"}))
         elif service == "deleteContact":
             try:
-                contact = helpers.removeDataList(request.body.decode(), dataList=localContext["contacts"])
+                contact = helpers.removeDataList(c2D(request.body.decode()), dataList=localContext["contacts"])
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to delete password",
                                                       "msgD": "ID supplied does not match any data in the database."}))
@@ -166,7 +168,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "contact successfully removed"}))
         elif service == "deleteNote":
             try:
-                noteList = helpers.removeDataList(request.body.decode(), dataList=localContext["notes"])
+                noteList = helpers.removeDataList(c2D(request.body.decode()), dataList=localContext["notes"])
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", 
                                                       "msgT": "Unable to delete password",
@@ -178,7 +180,7 @@ def js_requests(request,service):
     elif request.method == "PUT":
         if service == "updatePassword":
             try:
-                passwordInfo = helpers.updateDataList(request.body.decode(), dataList=localContext["passwords"], service=service)
+                passwordInfo = helpers.updateDataList(c2D(request.body.decode()), dataList=localContext["passwords"], service=service)
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to update password",
                                                       "msgD": "ID supplied does not match any data in the database."}))
@@ -187,7 +189,7 @@ def js_requests(request,service):
             return HttpResponse(helpers.httpDump({"success": "true", "msg": "password updated"}))
         elif service == "updateContact":
             try:
-                contactInfo = helpers.updateDataList(request.body.decode(), dataList=localContext["contacts"], service=service)
+                contactInfo = helpers.updateDataList(c2D(request.body.decode()), dataList=localContext["contacts"], service=service)
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to update contact",
                                                       "msgD": "ID supplied does not match any data in the database."}))
@@ -197,7 +199,7 @@ def js_requests(request,service):
         elif service == "updateNote":
             localContext = getContext()
             try:
-                noteInfo = helpers.updateDataList(request.body.decode(), dataList=localContext["notes"], service=service)
+                noteInfo = helpers.updateDataList(c2D(request.body.decode()), dataList=localContext["notes"], service=service)
             except Exception as e:
                 return HttpResponse(helpers.httpDump({"success": "false", "msgT": "Unable to update note",
                                                       "msgD": "ID supplied does not match any data in the database."}))

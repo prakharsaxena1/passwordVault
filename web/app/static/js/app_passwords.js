@@ -21,7 +21,6 @@ function deleteThis(ele) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             if (data["success"] == "true") {
                 let temp = document.getElementById(id);
                 temp.classList.add("slowRemove");
@@ -51,7 +50,6 @@ function actionPassword(ele) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             if (data["success"] == "true") {
                 site.value = data["data"][0],
                 url.value = data["data"][1],
@@ -86,11 +84,8 @@ let category = document.getElementById("categories");
 
 // Event Listeners
 cancelBtn.addEventListener("click", remOverlay);
-
 saveBtn.addEventListener("click", remOverlay);
-
 addBtn.addEventListener("click", addOverlay);
-
 addPassForm.addEventListener("submit", function (e) {
     // Prevent reloading
     e.preventDefault();
@@ -106,7 +101,6 @@ addPassForm.addEventListener("submit", function (e) {
                 return response.json();
             })
             .then(function (data) {
-                console.log(data);
                 if (data["success"] == "false") {
                     handleError(data);
                 } else {

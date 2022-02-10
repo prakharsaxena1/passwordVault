@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render, HttpResponse
-from app.helpers import httpDump, sharepassDecrypt
+from app.helpers import httpDump, sharepassDecrypt, c2D
 
 def gotoHome(request):
     return redirect("home/")
@@ -12,7 +12,7 @@ def sharepass(request):
         return render(request, "share-pass.html")
     if request.method == "POST":
         try:
-            plain = sharepassDecrypt(request.body.decode())
+            plain = sharepassDecrypt(c2D(request.body.decode()))
         except Exception as e:
             return HttpResponse(httpDump({ "success": "false", "data": "Invalid key provided" }))
         return HttpResponse(httpDump({ "success": "true", "data": plain }))
