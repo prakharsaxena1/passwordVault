@@ -1,4 +1,4 @@
-# Password Manager (AES-Encryption)
+# Password Manager (AES-Encryption) (command-line version)
 
 This app is a __single-user password manager__ i.e. it is focused on *one-user-multiple-passwords* approach. The user first have to create an account in this app by filling in *username* and *password*. The password is used to encrypt the data to if the user forgets the password or any of the file is deleted then the passwords can never be decrypted.
 This password manager user the Advanced Encryption Standard (AES) to encrypt and secrypt passwords.
