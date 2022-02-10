@@ -30,7 +30,6 @@ def getFernetObj(username, password):
 
 # API function => generates password
 def genPassword(pref):
-    # pref = json.loads(pref)
     # Default settings
     charset = "abcdefghijklmnopqrstuvwxyz"
     settings = pref["settings"]
@@ -50,7 +49,6 @@ def genPassword(pref):
 
 # API function => makes password data list
 def makePassDataList(r):
-    # r = json.loads(r)
     site, url, login ,password = r["site"], r["url"], r["login"], r["password"]
     if site == "" or url == "" or login == "" or password == "":
         raise Exception("Invalid data provided ")
@@ -58,7 +56,6 @@ def makePassDataList(r):
 
 # API function => makes note data list
 def makeNoteDataList(r):
-    # r = json.loads(r)
     title, description = r["title_AN"], r["desc_AN"]
     if title == "" and description == "":
         raise Exception("Note is empty")
@@ -66,28 +63,24 @@ def makeNoteDataList(r):
 
 # API function => make contact data list
 def makeContactDataList(r):
-    # r = json.loads(r)
     if r["cname"] == "":
         raise Exception("Invalid name")
-    if not (re.search(regex, r["cemail"])):  
+    if not (re.search(regex, r["cemail"])):
         raise Exception("Not a valid email")
     return [ r["cname"].capitalize(), r["cemail"], str(uuid.uuid4()) ]
 
 # API function => updates email
 def emailUpdate(r):
-    # r = json.loads(r)
     if(re.search(regex, r["updatedEmail"])):   
         return r["updatedEmail"]
     raise Exception("Not a valid email")
     
 # API function => share pass
 def sharePass_enc(r):
-    # r = json.loads(r)
     text, method, key, contact = r["text"], r["method"], r["key"], r["contact"]
     # Error checking
     if (contact == "0") or (method=="UE" and key=="") or (text==""):
         raise Exception("Value error")
-    
     if method == "UE":
         fernetObj = Fernet(makeKEY(f'{key+contact}'.encode()))
         return fernetObj.encrypt(text.encode()).decode()
@@ -102,7 +95,6 @@ def sharePass_enc(r):
         return f"{encryptedText1}ō{encryptedText2}"
 
 def sharepassDecrypt(r):
-    # r = json.loads(r)
     encCode = r["encCode"]
     encType = r["encType"]
     contact = r["contact"]
@@ -113,7 +105,6 @@ def sharepassDecrypt(r):
         plainFinal = key.decrypt(enc1.encode())
         return plainFinal.decode()
     elif encType == "UE":
-        print(r)
         key = r["key"] + contact
         fObj = Fernet(makeKEY(key.encode()))
         plainFinal = fObj.decrypt(encCode.encode())
@@ -121,7 +112,6 @@ def sharepassDecrypt(r):
     
 # API function => Get Password From ID
 def getFromID(r, dataList):
-    # r = json.loads(r)
     for i in dataList:
         if i[-1]==r["id"]:
             return i
@@ -130,7 +120,6 @@ def getFromID(r, dataList):
 # APIs to delete data:
 # Remove datalist with id
 def removeDataList(r, dataList):
-    # r = json.loads(r)
     for i in dataList:
         if i[-1]==r["id"]:
             dataList.remove(i)
@@ -144,7 +133,6 @@ def getUpdatedList(d, oldList):
 
 # Update datalist with id
 def updateDataList(r, dataList, service):
-    # r = json.loads(r)
     id = r["id"]
     temp = []
     for i in dataList:

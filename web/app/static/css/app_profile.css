@@ -155,5 +155,13 @@ main {
 
 input[type="submit"]{
   margin: auto;
+  background-color: #8e44ad;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+input[type="submit"]:hover{
+  background-color: #9b59b6;
+  transition: 300ms all ease-in-out;
 }
 
