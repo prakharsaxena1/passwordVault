@@ -1,7 +1,6 @@
-# Password Manager (AES-Encryption) (command-line version)
+# PasswordVAULT (AES-Encryption)
 
-This app is a __single-user password manager__ i.e. it is focused on *one-user-multiple-passwords* approach. The user first have to create an account in this app by filling in *username* and *password*. The password is used to encrypt the data to if the user forgets the password or any of the file is deleted then the passwords can never be decrypted.
-This password manager user the Advanced Encryption Standard (AES) to encrypt and secrypt passwords.
+PasswordVAULT is essentially a password manager which uses AES for storing passwords. It has 3 implementations **(CLI, WEB, GUI)**. Users can make multiple accounts and can store as many passwords as the want and that to for free.
 
 Example password:  "1FW.h4IIVI^qzUmJ" (without "")
 
@@ -11,40 +10,15 @@ Example password:  "1FW.h4IIVI^qzUmJ" (without "")
 
   > [thycotic.com](https://thycotic.com/resources/password-strength-checker/)
 
+## [CLI version](https://github.com/prakharsaxena1 "CLI version")
+As the name suggests, it is a command-line password manager
 
+## [WEB version](https://github.com/prakharsaxena1 "WEB version")
+This version uses django as backend and userfile concept to store password. More on that is available in the app itself.
 
-## Getting Started
+## [GUI version](https://github.com/prakharsaxena1 "GUI version")
+This version user tkinter to give a GUI to the app. This app is no longer supported.
 
-These instructions will get you a copy of the project up and running on your local machine. Git clone the repository and open _[passwordmanager.py](passwordmanager.py "app")_ file. Now enter username and password to make an account if running the app for the first time. Restart the program after creating the account and enter the correct login credentials.
-- __Make a password and save it__
-  - __*Choose site for the details need to be saved*__
-  - __*User-id for that site*__
-  - __*Your password will be copied to your clipboard*__
-- __View all saved password__
-- __Exit the app__
-
-Remember if you forget you master password and username then these saved passwords cannot be recovered.
-
-### Prerequisites
-
-Few modules are needed to be installed to use this app. They are :
-- cryptography
-- pyperclip
-- passwordmeter
-
-### Installing
-
-To clone the repository to your local machine :
-```
-git clone https://github.com/prakharsaxena1/passwordVault.git
-```
-
-To install the modules use the following commands :
-```
-pip install cryptography
-pip install passwordmeter
-pip install pyperclip
-```
 
 ## Author
 
