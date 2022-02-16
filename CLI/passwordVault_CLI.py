@@ -1,4 +1,4 @@
-from functions import loginUser, registerUser, guideUser, clearScreen
+from functions import loginUser, registerUser, guideUser, clearScreen, app
 
 # Interface
 exitText = '''
@@ -30,7 +30,6 @@ option = int(input(front+menu))
 if option == 1:
     clearScreen()
     print("< === Login === >")
-    loginUser()
 
 # Register
 elif option == 2:
