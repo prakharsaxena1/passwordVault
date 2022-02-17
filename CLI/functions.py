@@ -21,6 +21,12 @@ USERDATA = './data/'
 ACCOUNTS_FILE = os.path.join(USERDATA, "accounts")
 USERINFO_FOLDER = os.path.join(USERDATA, "userinfo/")
 
+if not os.path.exists(USERDATA):
+    os.mkdir(USERDATA)
+    os.mkdir(USERINFO_FOLDER)
+    open(ACCOUNTS_FILE, 'w').close()
+if os.path.exists(USERDATA) and not os.path.exists(ACCOUNTS_FILE):
+    open(ACCOUNTS_FILE, 'w').close()
 # =================== Functions
 def makeKEY(passgiven):  # Generating a AES Key according to the user provided password *inserts smart meme*
     kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=b'', iterations=100000, backend=default_backend())
@@ -56,15 +62,15 @@ def getMD5Hash(x):
 def loginUser():
     accounts = open(ACCOUNTS_FILE, 'r').readlines()
     username = input("Username: ")
-    if username not in accounts:
+    if getMD5Hash(username) not in accounts:
         print("username does not exist, register maybe? :)")
         return None
     password = getpass.getpass("Password: ")
     userHASH = getMD5Hash(username)
-    checkData = open(USERINFO_FOLDER+"/"+userHASH, 'r').readlines()[0]
+    checkData = open( USERINFO_FOLDER+f"{userHASH}/userdata", 'r').readlines()[0].strip("\n").encode()
     if login_pass(username, password, checkData) == True:
         print("User logged in successfully")
-        app()
+        app(username, password)
         return "Success"
     else:
         print("credential mismatch")
@@ -89,7 +95,7 @@ def registerUser():
         os.mkdir(userFolder)
         open(userFolder+"/userdata",'w').close()
         print("Account created, now start the app again and login")        
-        app()
+        app(username, password)
         return "Success"
 
 def guideUser():
@@ -109,25 +115,35 @@ def addPasswords(fernetObj, userHASH):
     data = f'{getID()}:{forsite}:{loginID}:{genPassword()}'.encode()
     dataFolder = USERINFO_FOLDER+f"{userHASH}/userdata"
     with open(dataFolder, 'a') as f:
-        f.write(fernetObj.encrypt(data)+'\n'.encode())
+        f.write(fernetObj.encrypt(data).decode()+"\n")
 
 def viewPasswords(fernetObj, userHASH):
     dataFolder = USERINFO_FOLDER+f"{userHASH}/userdata"
     with open(dataFolder, 'r') as f:
         for i in f.readlines():
-            data = fernetObj.decrypt(i).split(":")
+            data = fernetObj.decrypt(i.encode()).decode().split(":")
             print(f"=====>  {data[1]}  <=====\nLoginID: {data[2]}\t\tPassword: {data[3]}\n")
 
-def updatePasswords():
+def updatePasswords(id):
     pass
 
-def deletePasswords():
+def deletePasswords(id):
     pass
+
+def printForUD(fernetObj, userHASH):
+    dataFolder = USERINFO_FOLDER+f"{userHASH}/userdata"
+    print("{:<16}  {:<50}  {:<20}  {:<16}".format('ID', 'Website', 'LoginID', 'Password'))
+    # print("<-- ID -->\t\t<-- Website -->\t\t<-- LoginID -->\t\t<-- Password -->")
+    with open(dataFolder, 'r') as f:
+        for i in f.readlines():
+            data = fernetObj.decrypt(i.encode()).decode().split(":")
+            print("{:<16}  {:<50}  {:<20}  {:<16}".format(*data))
+            # print(f"{data[0]}\t\t{data[1]}\t\t{data[2]}\t\t{data[3]}")
 
 # App interface
 def app(username, password):
     clearScreen()
-    option = input("\n1. Add password\n2. View password\n3. Update password\n4. Delete password\n5. Logout\n$Option: ")
+    option = int(input("\n1. Add password\n2. View password\n3. Update password\n4. Delete password\n5. Logout\n$Option: "))
     fernetObj = getFernetObj(username, password)
     userHASH =  getMD5Hash(username)
     while(option!=5):
@@ -136,16 +152,18 @@ def app(username, password):
         elif option == 2:
             viewPasswords(fernetObj, userHASH)
         elif option == 3:
-            id = int(input("Enter password id: "))
+            printForUD(fernetObj, userHASH)
+            id = input("Enter password id: ")
             updatePasswords(id, fernetObj, userHASH)
         elif option == 4:
-            id = int(input("Enter password id: "))
+            printForUD(fernetObj, userHASH)
+            id = input("Enter password id: ")
             deletePasswords(id, fernetObj, userHASH)
         else:
             clearScreen()
             print("Invalid input, try again")
-        option = input("\n1. Add password\n2. View password\n3. Update password\n4. Delete password\n5. Logout\n$Option: ")
-
+        option = int(input("\n1. Add password\n2. View password\n3. Update password\n4. Delete password\n5. Logout\n$Option: "))
+    print("Logot successful")
 
 if __name__ == "__main__":
     print("This module is not ment for use as a separate entity")

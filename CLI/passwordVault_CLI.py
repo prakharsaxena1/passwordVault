@@ -30,6 +30,7 @@ option = int(input(front+menu))
 if option == 1:
     clearScreen()
     print("< === Login === >")
+    loginUser()
 
 # Register
 elif option == 2:
