@@ -1,4 +1,4 @@
-from functions import loginUser, registerUser, guideUser, clearScreen, app
+from functions import loginUser, registerUser, guideUser, clearScreen
 
 # Interface
 exitText = '''
