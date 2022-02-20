@@ -1,6 +1,0 @@
-from functions import getFernetObj
-x = "gAAAAABiD44FBGriPCVYJK9ECgPPo_uVLN8DqWv3FFGIN1ZaTpfKuDPSBGNyJQLJWuMovwnDa5SCurzzc2iKsx7g574oY_NTnLV9bXZaoaaMCGiyyGdRW-dRP4Dvrr8ZOvrnRXfPp1Co9AsaRAGelLaBT3XZ4WmIRBE03vghqTpWcNjYFG2FzUjgHZs2F4ZpTLhix0SG8QTF5ZAkeRyCwNtmjQvnx8S2FzWZaMbUIDvTn4-g8jndos8e96_7kTmCaiFoVKuh6pDCIlAnK_gQ7CysSnCxQIAEau9-JLRqGxQF099K0rJa6Sw="
-# x = "gAAAAABiDT5zCUWSi2auxJOE8T_Keuk6ae-ThYb8weZpv35Z94H1bhMBuu6RFEfFKhHBw2Si3y7OmSZ0r6gwtcRBbEtNEbfGixcG6SYB1xUNbzhOmLlymgH0OVz-8oqHVe7Yb3Up1MlqBfj3juP0kcR4K0p1cqDm6Q=="
-m = getFernetObj("thunder","1234")
-a = m.decrypt(x.encode())
-print(m.decrypt(a))

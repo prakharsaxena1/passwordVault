@@ -55,7 +55,9 @@ def login_pass(username,password,checkData):  # Check login
     return passMatch
 
 def loginUser():  # Login a user
-    accounts = open(ACCOUNTS_FILE, 'r').readlines()
+    with open(ACCOUNTS_FILE, 'r') as f:
+        accounts = f.readlines()
+    accounts = [i.strip("\n") for i in accounts]
     username = input("Username: ")
     userHASH = getMD5Hash(username)
     if userHASH not in accounts:
@@ -71,9 +73,12 @@ def loginUser():  # Login a user
         return None
 
 def registerUser():  # Register a user
-    accounts = open(ACCOUNTS_FILE, 'r').readlines()
+    with open(ACCOUNTS_FILE, 'r') as f:
+        accounts = f.readlines()
+    accounts = [i.strip("\n") for i in accounts]
     username = input("Username: ")
-    if username in accounts:
+    userHASH = getMD5Hash(username)
+    if userHASH in accounts:
         print("username already exists, try a different one :)")
         return None
     password = getpass.getpass("Password: ")
@@ -82,9 +87,8 @@ def registerUser():  # Register a user
         print("password mismatch!!")
         return None
     else:
-        userHASH = getMD5Hash(username)
         with open(ACCOUNTS_FILE, 'a') as f:
-            f.write(userHASH)
+            f.write(userHASH+"\n")
         userFolder = os.path.join(USERINFO_FOLDER, userHASH)
         os.makedirs(userFolder)
         open(userFolder+"/userdata",'w').close()

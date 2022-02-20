@@ -10,7 +10,6 @@ exitText = '''
 | |_|   |  |   |  |   |___  __   __  
 |_______|  |___|  |_______||__| |__| 
 '''
-
 front = '''
 __________                                               ._______   _________   ____ ___.____  ___________
 \______   \_____    ______ ________  _  _____________  __| _/\   \ /   /  _  \ |    |   \    | \__    ___/
@@ -31,23 +30,19 @@ if option == 1:
     clearScreen()
     print("< === Login === >")
     loginUser()
-
 # Register
 elif option == 2:
     clearScreen()
     print("< === Register === >")
     registerUser()
-
 # Guide
 elif option == 3:
     clearScreen()
     print("< === Guide === >")
     guideUser()
-
 # Exit
 elif option == 4:
     print(exitText)
-
 # Else for fools
 else:
     print("INVALID INPUT")
