@@ -10,13 +10,13 @@ Example password:  "1FW.h4IIVI^qzUmJ" (without "")
 
   > [thycotic.com](https://thycotic.com/resources/password-strength-checker/)
 
-## [CLI version](https://github.com/prakharsaxena1 "CLI version")
+## [CLI version](/CLI/ "CLI version")
 As the name suggests, it is a command-line password manager
 
-## [WEB version](https://github.com/prakharsaxena1 "WEB version")
+## [WEB version](/web/ "WEB version")
 This version uses django as backend and userfile concept to store password. More on that is available in the app itself.
 
-## [GUI version](https://github.com/prakharsaxena1 "GUI version")
+## [GUI version](/gui/ "GUI version")
 This version user tkinter to give a GUI to the app. This app is no longer supported.
 
 
